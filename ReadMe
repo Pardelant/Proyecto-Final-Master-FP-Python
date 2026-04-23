@@ -11,7 +11,7 @@ El sistema está estructurado en módulos para una mejor organización del códi
 
 ## Instalación
 
-Este proyecto requiere Python 3.x. No hay dependencias externas adicionales.
+Este proyecto requiere Python 3.14.3 No hay dependencias externas adicionales.
 
 1. Clona o descarga el repositorio.
 2. Asegúrate de tener Python instalado en tu sistema.
@@ -35,23 +35,6 @@ El programa creará un centro educativo, agregará algunos usuarios de ejemplo (
 - **Calcular promedios**: Nota media por alumno y global del centro.
 - **Listar usuarios**: Mostrar todos los usuarios registrados.
 
-### Ejemplo de salida
-
-```
-Aviso: no se pudo crear invalido. DNI inválido: 1234X
-
-Usuarios registrados en el centro:
-Profesor: Pepe (12345678A) - Informática
-Alumno: Eva (87654321B)
-Alumno: Jose (23456789C)
-
-Matriculando alumnos y asignando notas...
-
-Total de alumnos: 2
-Total de profesores: 1
-Nota media global del centro: 8.75
-```
-
 ## Estructura del proyecto
 
 ```
@@ -65,9 +48,6 @@ Nota media global del centro: 8.75
     └── modelos.py          # Definición de clases (Alumno, Profesor, Asignatura)
 ```
 
-## Dependencias
-
-- Python 3.14.3 (sin bibliotecas externas)
 
 ## Autor
 
