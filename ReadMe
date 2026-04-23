@@ -1,0 +1,78 @@
+# Sistema de Gestión Escolar
+
+## Descripción
+
+Este proyecto es un sistema de gestión escolar desarrollado en Python que permite administrar usuarios (alumnos y profesores), asignaturas, matriculaciones y calificaciones. Incluye validaciones básicas para datos como DNI y nombres, y calcula promedios de notas.
+
+El sistema está estructurado en módulos para una mejor organización del código:
+- **modelos.py**: Define las clases principales (Persona, Alumno, Profesor, Asignatura).
+- **gestion.py**: Contiene la clase `centro_educativo` para gestionar usuarios.
+- **common.py**: Incluye validaciones y excepciones personalizadas.
+
+## Instalación
+
+Este proyecto requiere Python 3.x. No hay dependencias externas adicionales.
+
+1. Clona o descarga el repositorio.
+2. Asegúrate de tener Python instalado en tu sistema.
+3. Ejecuta el archivo principal `main.py` para ver una demostración del sistema.
+
+## Uso
+
+Para ejecutar el sistema, simplemente corre el archivo `main.py`:
+
+```bash
+python main.py
+```
+
+El programa creará un centro educativo, agregará algunos usuarios de ejemplo (profesores y alumnos), matriculará alumnos en asignaturas, asignará calificaciones y mostrará estadísticas como el número total de usuarios y la nota media global.
+
+### Funcionalidades principales
+
+- **Crear usuarios**: Profesores y alumnos con validación de DNI.
+- **Matricular alumnos**: En asignaturas específicas.
+- **Calificar asignaturas**: Asignar notas del 0 al 10.
+- **Calcular promedios**: Nota media por alumno y global del centro.
+- **Listar usuarios**: Mostrar todos los usuarios registrados.
+
+### Ejemplo de salida
+
+```
+Aviso: no se pudo crear invalido. DNI inválido: 1234X
+
+Usuarios registrados en el centro:
+Profesor: Pepe (12345678A) - Informática
+Alumno: Eva (87654321B)
+Alumno: Jose (23456789C)
+
+Matriculando alumnos y asignando notas...
+
+Total de alumnos: 2
+Total de profesores: 1
+Nota media global del centro: 8.75
+```
+
+## Estructura del proyecto
+
+```
+.
+├── main.py                 # Archivo principal con la lógica de ejecución
+├── ReadMe                  # Este archivo
+└── gestion_escolar/
+    ├── __init__.py         # Inicialización del módulo
+    ├── common.py           # Validaciones y excepciones
+    ├── gestion.py          # Gestión del centro educativo
+    └── modelos.py          # Definición de clases (Alumno, Profesor, Asignatura)
+```
+
+## Dependencias
+
+- Python 3.x (sin bibliotecas externas)
+
+## Autor
+
+Antonio Pardo del Riego
+
+## Licencia
+
+Este proyecto es para fines educativos y no tiene una licencia específica asignada.
