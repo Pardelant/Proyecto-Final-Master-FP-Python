@@ -1,0 +1,101 @@
+from gestion_escolar.common import DatoInvalido, Validator
+from gestion_escolar.gestion import centro_educativo
+from gestion_escolar.modelos import Alumno, Asignatura, Profesor
+
+
+def crear_profesor(datos):
+    dni = datos.get("dni", "").strip()
+    nombre = Validator.formatear_nombre(datos.get("nombre", ""))
+    email = datos.get("email", "").strip()
+    especialidad = datos.get("especialidad", "").strip()
+
+    if not Validator.validar_dni(dni):
+        raise DatoInvalido(f"DNI inválido: {dni}")
+
+    return Profesor(dni, nombre, email, especialidad)
+
+
+def crear_alumno(datos):
+    dni = datos.get("dni", "").strip()
+    nombre = Validator.formatear_nombre(datos.get("nombre", ""))
+    email = datos.get("email", "").strip()
+
+    if not Validator.validar_dni(dni):
+        raise DatoInvalido(f"DNI inválido: {dni}")
+
+    return Alumno(dni, nombre, email)
+
+
+def main():
+    centro = centro_educativo()
+
+    datos = [
+        {
+            "tipo": "Profesor",
+            "dni": "12345678A",
+            "nombre": "pepe",
+            "email": "pepe@centro.edu",
+            "especialidad": "Informática",
+        },
+        {
+            "tipo": "Alumno",
+            "dni": "87654321B",
+            "nombre": "eva",
+            "email": "eva@centro.edu",
+        },
+        {
+            "tipo": "Alumno",
+            "dni": "23456789C",
+            "nombre": "jose",
+            "email": "jose@centro.edu",
+        },
+        {
+            "tipo": "Alumno",
+            "dni": "1234X",
+            "nombre": "invalido",
+            "email": "error@centro.edu",
+        },
+    ]
+
+    for persona_datos in datos:
+        try:
+            tipo = persona_datos.get("tipo")
+            if tipo == "Profesor":
+                persona = crear_profesor(persona_datos)
+            elif tipo == "Alumno":
+                persona = crear_alumno(persona_datos)
+            else:
+                raise DatoInvalido("Tipo de usuario desconocido")
+
+            centro.agregar_usuario(persona)
+        except DatoInvalido as error:
+            nombre = persona_datos.get("nombre", "<sin nombre>")
+            print(f"Aviso: no se pudo crear {nombre}. {error}")
+
+    print("\nUsuarios registrados en el centro:")
+    centro.listar_usuarios()
+
+    print("\nMatriculando alumnos y asignando notas...")
+    for usuario in centro.obtener_usuarios():
+        if isinstance(usuario, Alumno):
+            usuario.matricular(Asignatura("Python"))
+            usuario.matricular(Asignatura("Bases de Datos"))
+            usuario.calificar("Python", 8.5)
+            usuario.calificar("Bases de Datos", 9.0)
+
+    alumnos = [u for u in centro.obtener_usuarios() if isinstance(u, Alumno)]
+    profesores = [u for u in centro.obtener_usuarios() if isinstance(u, Profesor)]
+
+    promedio_global = (
+        sum(alumno.nota_media() for alumno in alumnos) / len(alumnos)
+        if alumnos
+        else 0.0
+    )
+
+    print(f"\nTotal de alumnos: {len(alumnos)}")
+    print(f"Total de profesores: {len(profesores)}")
+    print(f"Nota media global del centro: {promedio_global:.2f}")
+
+
+if __name__ == "__main__":
+    main()
