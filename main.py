@@ -25,22 +25,30 @@ def crear_alumno(datos):
 
     return Alumno(dni, nombre, email)
 
-def localizar(dni):
+# def localizar(dni):
 
 
-
-    return usuario
 
 def modificar(dni):
     #metodo void para modificar json
+
+    return True
     
 
 def guardar_modificaciones():
 
-    #
+    return True
 
 
 def main():
+
+    #PUNTO DE ENTRADA.
+
+    #LLAMAR APP.INTERFAZ_USUARIO
+
+
+
+
     centro = centro_educativo()
 
     datos = [
