@@ -27,10 +27,10 @@ class Validator:
     @staticmethod
     def formatear_nombre(texto: str) -> str:
         if texto is None:
-            return ""
+            raise DatoInvalido()
 
         texto = str(texto).strip()
         if not texto:
-            return ""
+            raise DatoInvalido()
 
         return texto.capitalize()

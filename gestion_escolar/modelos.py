@@ -2,7 +2,6 @@ from abc import ABC, abstractmethod
 
 
 class Persona(ABC):
-    total_vehiculos = 0
 
     def __init__(self, dni, nombre, email):
         self._dni = dni
@@ -17,7 +16,7 @@ class Persona(ABC):
 class Asignatura:
     def __init__(self, nombre: str, nota: float = 0.0):
         self.nombre = nombre
-        self.nota = 0.0
+        self.nota = nota
         self.set_nota(nota)
 
     def set_nota(self, valor: float):
