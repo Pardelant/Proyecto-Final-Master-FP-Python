@@ -1,3 +1,6 @@
+from app.interfaz_usuario import InterfazConsola
+
+"""
 from gestion_escolar.common import DatoInvalido, Validator
 from gestion_escolar.gestion import centro_educativo
 from gestion_escolar.modelos import Alumno, Asignatura, Profesor
@@ -117,6 +120,17 @@ def main():
     print(f"\nTotal de alumnos: {len(alumnos)}")
     print(f"Total de profesores: {len(profesores)}")
     print(f"Nota media global del centro: {promedio_global:.2f}")
+
+
+if __name__ == "__main__":
+    main()
+"""
+
+
+def main():
+    """Punto de inicio de la aplicación"""
+    app = InterfazConsola()
+    app.ejecutar()
 
 
 if __name__ == "__main__":
