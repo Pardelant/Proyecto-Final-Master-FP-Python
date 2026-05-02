@@ -2,7 +2,6 @@ from abc import ABC, abstractmethod
 
 
 class Persona(ABC):
-
     def __init__(self, dni, nombre, email):
         self._dni = dni
         self.nombre = nombre

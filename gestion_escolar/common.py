@@ -21,18 +21,16 @@ class Validator:
 
         if not numeros.isdigit() or not letra.isalpha():
             return False
-        
-        
+
         letras_validas = "TRWAGMYFPDXBNJZSQVHLCKE"
-        
-        
+
         indice = int(numeros) % 23
         letra_calculo = letras_validas[indice]
 
         if letra != letra_calculo:
             return False
-        
-        return True 
+
+        return True
 
     @staticmethod
     def formatear_nombre(texto: str) -> str:

@@ -1,0 +1,22 @@
+[
+  {
+    "id": "BD",
+    "nombre": "Bases de datos"
+  },
+  {
+    "id": "CD",
+    "nombre": "Contornos de desenvolvemento"
+  },
+  {
+    "id": "LM",
+    "nombre": "Linguaxes de marcas e sistemas de xestión de información"
+  },
+  {
+    "id": "PROG",
+    "nombre": "Programación"
+  },
+  {
+    "id": "SI",
+    "nombre": "Sistemas informáticos"
+  }
+]
