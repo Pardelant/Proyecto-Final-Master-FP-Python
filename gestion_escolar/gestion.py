@@ -1,13 +1,17 @@
-class centro_educativo:
+from gestion_escolar.ficheros import GestorFicheros
+from gestion_escolar.modelos import Alumno
+
+
+class CentroEducativo:
     def __init__(self):
-        self._usuarios = []
+        self.gestor_alumnos = GestorFicheros("alumno.json")
 
-    def agregar_usuario(self, persona):
-        self._usuarios.append(persona)
+        datos_planos = self.gestor_alumnos.leerJSON()
 
-    def listar_usuarios(self):
-        for usuario in self._usuarios:
-            print(usuario)
+        self._alumnos = [Alumno.from_dict(d) for d in datos_planos]
 
-    def obtener_usuarios(self):
-        return list(self._usuarios)
+    def guardar_alumnos(self):
+
+        lista_dicts = [a.to_dict() for a in self._alumnos]
+
+        self.gestor_alumnos.guardarEnJSON(lista_dicts)

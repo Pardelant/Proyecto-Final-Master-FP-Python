@@ -128,7 +128,7 @@ if __name__ == "__main__":
 
 
 def main():
-    """Punto de inicio de la aplicación"""
+    """inicio"""
     app = InterfazConsola()
     app.ejecutar()
 

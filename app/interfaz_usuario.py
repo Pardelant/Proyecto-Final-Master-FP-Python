@@ -15,10 +15,8 @@ class InterfazConsola:
         dni = input("DNI: ")
         nombre = input("Nombre: ")
         email = input("EMAIL: ")
-        print("ids de las asignaturas BD CD LM PROG SI")
+        print("ids de las asignaturas: BD CD LM PROG SI")
         ids_asig = ["BD", "CD", "LM,", "PROG", "SI"]
-
-        # ... devolver diccionario con los datos
 
     def mostrar_menu(self):
         print("\n--- MENÚ PRINCIPAL ---")
