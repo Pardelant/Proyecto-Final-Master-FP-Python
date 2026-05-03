@@ -8,6 +8,10 @@ El sistema está estructurado en módulos para una mejor organización del códi
 - **modelos.py**: Define las clases principales (Persona, Alumno, Profesor, Asignatura).
 - **gestion.py**: Contiene la clase `centro_educativo` para gestionar usuarios.
 - **common.py**: Incluye validaciones y excepciones personalizadas.
+- **ficheros.py**: Gestiona la persistencia de datos en archivos JSON.
+- **registrar.py**: Contiene funcionalidades de registro y autenticación.
+- **interfaz_usuario.py**: Proporciona la interfaz de usuario para interactuar con el sistema.
+- **datos/**: Carpeta que almacena los archivos JSON con información de alumnos, profesores y asignaturas.
 
 ## Instalación
 
@@ -39,13 +43,22 @@ El programa creará un centro educativo, agregará algunos usuarios de ejemplo (
 
 ```
 .
-├── main.py                 # Archivo principal con la lógica de ejecución
-├── ReadMe                  # Este archivo
+├── main.py                          # Archivo principal con la lógica de ejecución
+├── ReadMe                           # Este archivo
+├── app/
+│   ├── __init__.py                  # Inicialización del módulo app
+│   └── interfaz_usuario.py          # Interfaz de usuario del sistema
+├── datos/
+│   ├── alumno.json                  # Base de datos de alumnos
+│   ├── asignatura.json              # Base de datos de asignaturas
+│   └── profesor.json                # Base de datos de profesores
 └── gestion_escolar/
-    ├── __init__.py         # Inicialización del módulo
-    ├── common.py           # Validaciones y excepciones
-    ├── gestion.py          # Gestión del centro educativo
-    └── modelos.py          # Definición de clases (Alumno, Profesor, Asignatura)
+    ├── __init__.py                  # Inicialización del módulo
+    ├── common.py                    # Validaciones y excepciones
+    ├── ficheros.py                  # Gestión de persistencia en archivos
+    ├── gestion.py                   # Gestión del centro educativo
+    ├── modelos.py                   # Definición de clases principales
+    └── registrar.py                 # Funcionalidades de registro
 ```
 
 

@@ -26,12 +26,12 @@ class CentroEducativo:
     def guardar_alumnos(self):
         lista_dicts = [a.to_dict() for a in self._alumnos]
         # CORRECCIÓN: Nombre del método según los requisitos del proyecto
-        self.gestor_alumnos.guardarEnJSON(lista_dicts)
+        self.gestor_alumnos.guardar_en_json(lista_dicts)
 
     def guardar_profesores(self):
         lista_dicts = [p.to_dict() for p in self._profesores]
         # CORRECCIÓN: Nombre del método según los requisitos del proyecto
-        self.gestor_profesores.guardarEnJSON(lista_dicts)
+        self.gestor_profesores.guardar_en_json(lista_dicts)
 
     # --- MÉTODOS DE GESTIÓN DE USUARIOS ---
     def obtener_usuarios(self) -> list:
@@ -51,7 +51,7 @@ class CentroEducativo:
             if u._dni == dni: 
                 return u
         return None
-
+ 
     def eliminar_usuario(self, dni: str):
         """Filtra las listas para eliminar al usuario por DNI"""
         self._alumnos = [a for a in self._alumnos if a._dni != dni]
