@@ -1,3 +1,4 @@
+"""
 import json
 import os
 
@@ -8,16 +9,12 @@ class GestorFicheros:
     operaciones_ficheros = 0
 
     def __init__(self, ruta: str):
-        """ 
-        Inicialización para un fichero concreto.
-        """
+       
         self._ruta = ruta
         GestorFicheros.ficheros_abiertos += 1
 
     def leer_json(self) -> list:
-        """
-        Lectura de ficheros JSON
-        """
+       
         GestorFicheros.operaciones_ficheros += 1
         
         if not os.path.exists(self._ruta):
@@ -32,9 +29,7 @@ class GestorFicheros:
             return []
 
     def guardar_json(self, contenido: list) -> None:
-        """
-        Escritura de ficheros json
-        """
+       
         GestorFicheros.operaciones_ficheros += 1
         
         try:
@@ -42,3 +37,4 @@ class GestorFicheros:
                 json.dump(contenido, f, ensure_ascii=False, indent=4)
         except Exception as e:
             print(f"Error al guardar en el fichero {self._ruta}: {e}")
+"""
