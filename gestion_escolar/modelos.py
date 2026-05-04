@@ -55,17 +55,29 @@ class Alumno(Persona):
             "dni": self._dni,
             "nombre": self.nombre,
             "email": self.email,
-            "asignaturas": [asig.to_dict() for asig in self._asignaturas],
+            "notas_alumno": [
+                {"asig_id": asig.nombre, "nota": asig.nota}
+                for asig in self._asignaturas
+            ],
         }
+
+    @classmethod
+    def from_dict(cls, datos: dict):
+        alumno = cls(datos.get("dni", ""), datos.get("nombre", ""), datos.get("email", ""))
+        for nota in datos.get("notas_alumno", []):
+            asignatura = Asignatura(nota.get("asig_id", ""), nota.get("nota", 0.0))
+            alumno.matricular(asignatura)
+        return alumno
 
     def __str__(self):
         return f"Alumno: {self.nombre} ({self._dni})"
 
 
 class Profesor(Persona):
-    def __init__(self, dni: str, nombre: str, email: str, especialidad: str):
+    def __init__(self, dni: str, nombre: str, email: str, especialidad: str, asignaturas_impartidas=None):
         super().__init__(dni, nombre, email)
         self.especialidad = especialidad
+        self.asignaturas_impartidas = asignaturas_impartidas or []
 
     def to_dict(self):
         return {
@@ -75,6 +87,16 @@ class Profesor(Persona):
             "especialidad": self.especialidad,
             "asignaturas_impartidas": self.asignaturas_impartidas,
         }
+
+    @classmethod
+    def from_dict(cls, datos: dict):
+        return cls(
+            datos.get("dni", ""),
+            datos.get("nombre", ""),
+            datos.get("email", ""),
+            datos.get("especialidad", ""),
+            datos.get("asignaturas_impartidas", []),
+        )
 
     def __str__(self):
         return f"Profesor: {self.nombre} ({self._dni}) - {self.especialidad}"

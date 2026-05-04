@@ -3,37 +3,33 @@ from gestion_escolar.ficheros import GestorFicheros
 
 class CentroEducativo:
     def __init__(self):
-        # 1. Rutas de archivos (asegúrate de que la carpeta 'datos' exista)
+        # 1. Rutas de archivos
         self.gestor_alumnos = GestorFicheros("datos/alumno.json")
         self.gestor_profesores = GestorFicheros("datos/profesor.json")
         self.gestor_asignaturas = GestorFicheros("datos/asignatura.json")
 
-        # 2. Carga inicial de datos usando los nombres correctos de los métodos
         datos_alu = self.gestor_alumnos.leer_json()
         datos_prof = self.gestor_profesores.leer_json()
 
-        # 3. CORRECCIÓN: Usar from_dict para RECONSTRUIR los objetos
-        self._alumnos = [Alumno.to_dict(d) for d in datos_alu]
-        self._profesores = [Profesor.to_dict(d) for d in datos_prof]
+        self._alumnos = [Alumno.from_dict(d) for d in datos_alu]
+        self._profesores = [Profesor.from_dict(d) for d in datos_prof]
 
-    # --- MÉTODOS DE PERSISTENCIA ---
+    # PERSISTENCIA
     def guardar_datos(self):
         """Guarda todas las listas en sus respectivos archivos JSON"""
         self.guardar_alumnos()
         self.guardar_profesores()
-        print("Datos sincronizados en el disco duro.")
+        print("Datos sincronizados.")
 
     def guardar_alumnos(self):
         lista_dicts = [a.to_dict() for a in self._alumnos]
-        # CORRECCIÓN: Nombre del método según los requisitos del proyecto
-        self.gestor_alumnos.guardar_en_json(lista_dicts)
+        self.gestor_alumnos.guardar_json(lista_dicts)
 
     def guardar_profesores(self):
         lista_dicts = [p.to_dict() for p in self._profesores]
-        # CORRECCIÓN: Nombre del método según los requisitos del proyecto
-        self.gestor_profesores.guardar_en_json(lista_dicts)
+        self.gestor_profesores.guardar_json(lista_dicts)
 
-    # --- MÉTODOS DE GESTIÓN DE USUARIOS ---
+    
     def obtener_usuarios(self) -> list:
         """Retorna la lista combinada (Polimorfismo en acción)"""
         return self._alumnos + self._profesores

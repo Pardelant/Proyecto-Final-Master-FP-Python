@@ -3,7 +3,7 @@ import os
 
 
 class GestorFicheros:
-    # ATRIBUTOS DE CLASE (Compartidos por todas las instancias)
+    # ATRIBUTOS DE CLASE
     ficheros_abiertos = 0
     operaciones_ficheros = 0
 
@@ -16,7 +16,7 @@ class GestorFicheros:
 
     def leer_json(self) -> list:
         """
-        Lectura de ficheros JSON (no formatea, devuelve lista de diccionarios)
+        Lectura de ficheros JSON
         """
         GestorFicheros.operaciones_ficheros += 1
         
