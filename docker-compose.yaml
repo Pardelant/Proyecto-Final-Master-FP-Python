@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_escuela
+    restart: always
+
+    ports:
+      - "3306:3306"
+
+    environment:
+      MYSQL_ROOT_PASSWORD: abc123.
+      MYSQL_DATABASE: db_escuela
+      MYSQL_USER: usuario
+      MYSQL_PASSWORD: abc123.
+
+    volumes:
+      - db_data:/var/lib/mysql
+
+    networks:
+      - red-ejemplo
+
+volumes:
+  db_data:
+
+networks:
+  red-ejemplo:
