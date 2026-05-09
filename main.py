@@ -1,4 +1,6 @@
 from app.interfaz_usuario import InterfazConsola
+from datetime import datetime
+from escuela.db_manager import Manager
 
 """
 from gestion_escolar.common import DatoInvalido, Validator
@@ -131,6 +133,70 @@ def main():
     """inicio"""
     app = InterfazConsola()
     app.ejecutar()
+
+
+def login():
+    print("--- CONEXIÓN ECOTRACK ---")
+    m = input("Motor (1: SQLite, 2: MySQL, 3: Postgres): ")
+    if m == "1":
+        return {"motor": "sqlite", "path": "ecotrack.db"}
+
+    motor = "mysql" if m == "2" else "postgresql"
+    return {
+        "motor": motor,
+        "host": "localhost",
+        "port": 3306 if m == "2" else 5432,
+        "user": "root",
+        "pass": "admin",
+        "db": "ecotrack",
+    }
+
+
+def main():
+    conf = login()
+    db = DBManager(conf)
+
+    while True:
+        op = InterfazConsola.menu()
+
+        if op == "1":
+            res = db.ejecutar_consulta("SELECT * FROM material")
+            if res:
+                InterfazConsola.mostrar_tabla(*res)
+
+        elif op == "2":
+            res = db.ejecutar_consulta("SELECT * FROM punto")
+            if res:
+                InterfazConsola.mostrar_tabla(*res)
+
+        elif op == "3":
+            # Para el registro necesitamos IDs existentes
+            p_id = input("ID del Punto: ")
+            m_id = input("ID del Material: ")
+            cant = input("Cantidad (kg): ")
+            fuente = input("Fuente (domiciliario/empresa/evento): ")
+            fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            db.registro_crear(fecha, p_id, m_id, cant, fuente)
+            print("Depósito registrado.")
+
+        elif op == "4":
+            res = db.listar_con_joins()
+            if res:
+                InterfazConsola.mostrar_tabla(*res)
+
+        elif op == "5":
+            print("1. Nuevo Material  2. Nuevo Punto")
+            sub = input("> ")
+            if sub == "1":
+                db.material_crear(input("Nombre: "), input("Cat: "), "kg", 1)
+            else:
+                db.punto_crear(
+                    input("Nombre: "), input("Muni: "), input("Dir: ")
+                )
+
+        elif op == "0":
+            print("Saliendo...")
+            break
 
 
 if __name__ == "__main__":
