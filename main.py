@@ -1,6 +1,6 @@
 from app.interfaz_usuario import InterfazConsola
 from datetime import datetime
-from escuela.db_manager import Manager
+from escuela.db_manager import DBManager
 
 """
 from gestion_escolar.common import DatoInvalido, Validator
