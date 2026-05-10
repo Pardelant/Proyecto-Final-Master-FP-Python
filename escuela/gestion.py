@@ -1,23 +1,15 @@
-from escuela.modelos import Alumno, Profesor, Asignatura
 from escuela.db_manager import DBManager
 
 
 class CentroEducativo:
     def __init__(self):
-        # 1. Rutas de archivos
-        self.gestor_alumnos = GestorFicheros("datos/alumno.json")
-        self.gestor_profesores = GestorFicheros("datos/profesor.json")
-        self.gestor_asignaturas = GestorFicheros("datos/asignatura.json")
+        self.db = DBManager()
 
-        datos_alu = self.gestor_alumnos.leer_json()
-        datos_prof = self.gestor_profesores.leer_json()
 
-        self._alumnos = [Alumno.from_dict(d) for d in datos_alu]
-        self._profesores = [Profesor.from_dict(d) for d in datos_prof]
-
+"""
     # PERSISTENCIA
     def guardar_datos(self):
-        """Guarda todas las listas en sus respectivos archivos JSON"""
+        Guarda todas las listas en sus respectivos archivos JSON
         self.guardar_alumnos()
         self.guardar_profesores()
         print("Datos sincronizados.")
@@ -31,31 +23,31 @@ class CentroEducativo:
         self.gestor_profesores.guardar_json(lista_dicts)
 
     def obtener_usuarios(self) -> list:
-        """Retorna la lista combinada (Polimorfismo en acción)"""
+        Retorna la lista combinada (Polimorfismo en acción)
         return self._alumnos + self._profesores
 
     def agregar_usuario(self, persona):
-        """Añade un Alumno o Profesor a la lista correspondiente"""
+        Añade un Alumno o Profesor a la lista correspondiente
         if isinstance(persona, Alumno):
             self._alumnos.append(persona)
         elif isinstance(persona, Profesor):
             self._profesores.append(persona)
 
     def buscar_por_dni(self, dni: str):
-        """Busca en ambas listas y retorna el objeto o None"""
+        Busca en ambas listas y retorna el objeto o None
         for u in self.obtener_usuarios():
             if u._dni == dni:
                 return u
         return None
 
     def eliminar_usuario(self, dni: str):
-        """Filtra las listas para eliminar al usuario por DNI"""
+        Filtra las listas para eliminar al usuario por DNI
         self._alumnos = [a for a in self._alumnos if a._dni != dni]
         self._profesores = [p for p in self._profesores if p._dni != dni]
         print(f"Usuario con DNI {dni} eliminado del sistema.")
 
     def modificar_usuario(self, dni: str):
-        """Busca al usuario y permite cambiar sus datos básicos"""
+        Busca al usuario y permite cambiar sus datos básicos
         usuario = self.buscar_por_dni(dni)
         if not usuario:
             print("No existe usuario con ese DNI.")
@@ -77,7 +69,7 @@ class CentroEducativo:
 
     # --- MÉTODOS DE GESTIÓN ACADÉMICA ---
     def matricular_en_alumno(self, dni: str, asignatura: Asignatura):
-        """Busca un alumno y añade una nueva asignatura a su lista"""
+        Busca un alumno y añade una nueva asignatura a su lista
         usuario = self.buscar_por_dni(dni)
         if isinstance(usuario, Alumno):
             usuario.matricular(asignatura)
@@ -86,7 +78,7 @@ class CentroEducativo:
             print("El DNI no corresponde a un alumno.")
 
     def eliminar_asignatura_alumno(self, dni: str, nombre_asig: str):
-        """Busca al alumno y filtra su lista interna de asignaturas"""
+        Busca al alumno y filtra su lista interna de asignaturas
         usuario = self.buscar_por_dni(dni)
         if isinstance(usuario, Alumno):
             original_count = len(usuario._asignaturas)
@@ -99,7 +91,7 @@ class CentroEducativo:
                 print("Asignatura no encontrada en el expediente.")
 
     def poner_nota(self, dni: str, nombre_asig: str, nota: float):
-        """Usa el método calificar() del modelo Alumno"""
+        Usa el método calificar() del modelo Alumno
         usuario = self.buscar_por_dni(dni)
         if isinstance(usuario, Alumno):
             try:
@@ -107,3 +99,4 @@ class CentroEducativo:
                 print(f"Nota de {nombre_asig} actualizada a {nota}")
             except ValueError as e:
                 print(f"Error: {e}")
+"""
