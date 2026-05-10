@@ -130,37 +130,22 @@ if __name__ == "__main__":
 
 
 def main():
-    """inicio"""
-    app = InterfazConsola()
-    app.ejecutar()
-
-
-def login():
-    print("--- CONEXIÓN ECOTRACK ---")
-    m = input("Motor (1: SQLite, 2: MySQL, 3: Postgres): ")
-    if m == "1":
-        return {"motor": "sqlite", "path": "ecotrack.db"}
-
-    motor = "mysql" if m == "2" else "postgresql"
-    return {
-        "motor": motor,
+    conf = {
+        "motor": "mysql",
         "host": "localhost",
-        "port": 3306 if m == "2" else 5432,
-        "user": "root",
-        "pass": "admin",
-        "db": "ecotrack",
+        "port": 3307,
+        "user": "pardelant",
+        "pass": "abc123",
+        "db": "escuela-db",
     }
-
-
-def main():
-    conf = login()
     db = DBManager(conf)
+    """inicio"""
 
     while True:
         op = InterfazConsola.menu()
 
         if op == "1":
-            res = db.ejecutar_consulta("SELECT * FROM material")
+            res = db.ejecutar_consulta("SELECT * FROM alumnos")
             if res:
                 InterfazConsola.mostrar_tabla(*res)
 

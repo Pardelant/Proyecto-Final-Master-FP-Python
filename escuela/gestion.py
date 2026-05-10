@@ -1,5 +1,6 @@
-from gestion_escolar.modelos import Alumno, Profesor, Asignatura
-from gestion_escolar.ficheros import GestorFicheros
+from escuela.modelos import Alumno, Profesor, Asignatura
+from escuela.db_manager import DBManager
+
 
 class CentroEducativo:
     def __init__(self):
@@ -29,7 +30,6 @@ class CentroEducativo:
         lista_dicts = [p.to_dict() for p in self._profesores]
         self.gestor_profesores.guardar_json(lista_dicts)
 
-    
     def obtener_usuarios(self) -> list:
         """Retorna la lista combinada (Polimorfismo en acción)"""
         return self._alumnos + self._profesores
@@ -44,10 +44,10 @@ class CentroEducativo:
     def buscar_por_dni(self, dni: str):
         """Busca en ambas listas y retorna el objeto o None"""
         for u in self.obtener_usuarios():
-            if u._dni == dni: 
+            if u._dni == dni:
                 return u
         return None
- 
+
     def eliminar_usuario(self, dni: str):
         """Filtra las listas para eliminar al usuario por DNI"""
         self._alumnos = [a for a in self._alumnos if a._dni != dni]
