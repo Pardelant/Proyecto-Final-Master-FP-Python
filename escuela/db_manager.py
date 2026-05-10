@@ -39,3 +39,11 @@ class DBManager:
         datos = self.cursor.fetchone()
         return columnas, datos
     
+    # def eliminar()
+    # tener encuenta las propagaciones en otras tablas
+
+    def buscar(self, tabla, dni):
+        self.cursor.excute(f"SELECT * FROM {tabla} WHERE id=%s", (dni))
+        return self.cursor.fetchone()
+    
+    # def actualizar(self, params):
