@@ -65,7 +65,7 @@ class DBManager:
 
         self.cursor.execute(
             f"DELETE FROM {tabla} WHERE {identificador_columna} = %s",
-            (identificador_columna),
+            (identificador),
         )
 
         self.conn.commit()
@@ -102,6 +102,16 @@ class DBManager:
     def insertar_asignatura(self, nombre):
         self.cursor.excute(
             "INSERT into asignaturas (nombre) VALUES (%s)", (nombre)
+        )
+
+        self.conn.commit()
+
+        print(self.cursor.rowcount, "filas insertadas")
+
+    def insertar_nota_alumno(self, alumno_dni, asignatura_nombre, nota):
+        self.cursor.execute(
+            "INSERT into notas_alumno (alumno_dni, asignatura_nombre, nota) VALUES (%s,%s,%s)",
+            (alumno_dni, asignatura_nombre, nota),
         )
 
         self.conn.commit()
