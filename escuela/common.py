@@ -1,9 +1,9 @@
 class DatoInvalido(Exception):
-    print("dato invalido")
+    pass
 
 
 class Duplicado(Exception):
-    print("duplicado")
+    pass
 
 
 class Validator:

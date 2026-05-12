@@ -1,5 +1,5 @@
 from app.interfaz_usuario import InterfazConsola
-from datetime import datetime
+from escuela.gestion import CentroEducativo
 from escuela.db_manager import DBManager
 
 """
@@ -138,48 +138,11 @@ def main():
         "pass": "abc123",
         "db": "escuela-db",
     }
-    db = DBManager(conf)
-    """inicio"""
 
-    while True:
-        op = InterfazConsola.menu()
-
-        if op == "1":
-            res = db.ejecutar_consulta("SELECT * FROM alumnos")
-            if res:
-                InterfazConsola.mostrar_tabla(*res)
-
-        elif op == "2":
-            res = db.ejecutar_consulta("SELECT * FROM punto")
-            if res:
-                InterfazConsola.mostrar_tabla(*res)
-
-        elif op == "3":
-            # Para el registro necesitamos IDs existentes
-            p_id = input("ID del Punto: ")
-            m_id = input("ID del Material: ")
-            cant = input("Cantidad (kg): ")
-            fuente = input("Fuente (domiciliario/empresa/evento): ")
-            fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            db.registro_crear(fecha, p_id, m_id, cant, fuente)
-            print("Depósito registrado.")
-
-        elif op == "4":
-            res = db.listar_con_joins()
-            if res:
-                InterfazConsola.mostrar_tabla(*res)
-
-        elif op == "5":
-            print("1. Nuevo Material  2. Nuevo Punto")
-            sub = input("> ")
-            if sub == "1":
-                db.material_crear(input("Nombre: "), input("Cat: "), "kg", 1)
-            else:
-                db.punto_crear(input("Nombre: "), input("Muni: "), input("Dir: "))
-
-        elif op == "0":
-            print("Saliendo...")
-            break
+    sistema = DBManager(conf)
+    sistema = CentroEducativo()
+    app = InterfazConsola(sistema)
+    app.ejecutar()
 
 
 if __name__ == "__main__":
