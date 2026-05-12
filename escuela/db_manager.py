@@ -100,9 +100,7 @@ class DBManager:
         print(self.cursor.rowcount, "filas insertadas")
 
     def insertar_asignatura(self, nombre):
-        self.cursor.excute(
-            "INSERT into asignaturas (nombre) VALUES (%s)", (nombre)
-        )
+        self.cursor.excute("INSERT into asignaturas (nombre) VALUES (%s)", (nombre))
 
         self.conn.commit()
 

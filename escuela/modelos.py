@@ -63,7 +63,9 @@ class Alumno(Persona):
 
     @classmethod
     def from_dict(cls, datos: dict):
-        alumno = cls(datos.get("dni", ""), datos.get("nombre", ""), datos.get("email", ""))
+        alumno = cls(
+            datos.get("dni", ""), datos.get("nombre", ""), datos.get("email", "")
+        )
         for nota in datos.get("notas_alumno", []):
             asignatura = Asignatura(nota.get("asig_id", ""), nota.get("nota", 0.0))
             alumno.matricular(asignatura)
@@ -74,7 +76,14 @@ class Alumno(Persona):
 
 
 class Profesor(Persona):
-    def __init__(self, dni: str, nombre: str, email: str, especialidad: str, asignaturas_impartidas=None):
+    def __init__(
+        self,
+        dni: str,
+        nombre: str,
+        email: str,
+        especialidad: str,
+        asignaturas_impartidas=None,
+    ):
         super().__init__(dni, nombre, email)
         self.especialidad = especialidad
         self.asignaturas_impartidas = asignaturas_impartidas or []

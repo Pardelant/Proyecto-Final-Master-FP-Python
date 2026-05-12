@@ -1,4 +1,4 @@
-from gestion_escolar import (
+from escuela import (
     common,
     ficheros,
     gestion,
@@ -6,4 +6,3 @@ from gestion_escolar import (
     registrar,
 )
 from app.interfaz_usuario import InterfazConsola
-

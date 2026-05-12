@@ -1,4 +1,5 @@
 from escuela.db_manager import DBManager
+from escuela.modelos import Alumno, Profesor, Asignatura
 
 
 class CentroEducativo:
@@ -100,3 +101,48 @@ class CentroEducativo:
             except ValueError as e:
                 print(f"Error: {e}")
 """
+
+
+def agregar_alumno(self, alumno):
+
+    self.db.insertar_alumno(alumno.dni, alumno.nombre, alumno.email)
+
+
+def buscar_alumno(self, dni):
+
+    fila = self.db.buscar_alumno(dni)
+
+    if not fila:
+        return None
+
+    return Alumno.from_dict(fila)
+
+
+def eliminar_alumno(self, dni):
+
+    self.db.eliminar("alumnos", dni)
+
+
+def matricular_en_alumno(self, dni, asignatura):
+
+    self.db.insertar_nota_alumno(dni, asignatura.nombre, asignatura.nota)
+
+
+def agregar_profesor(self, profesor):
+
+    self.db.insertar_a(profesor.dni, profesor.nombre, profesor.email)
+
+
+def buscar_profesor(self, dni):
+
+    fila = self.db.buscar_alumno(dni)
+
+    if not fila:
+        return None
+
+    return Profesor.from_dict(fila)
+
+
+def eliminar_profesor(self, dni):
+
+    self.db.eliminar("profesores", dni)

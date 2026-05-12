@@ -175,9 +175,7 @@ def main():
             if sub == "1":
                 db.material_crear(input("Nombre: "), input("Cat: "), "kg", 1)
             else:
-                db.punto_crear(
-                    input("Nombre: "), input("Muni: "), input("Dir: ")
-                )
+                db.punto_crear(input("Nombre: "), input("Muni: "), input("Dir: "))
 
         elif op == "0":
             print("Saliendo...")

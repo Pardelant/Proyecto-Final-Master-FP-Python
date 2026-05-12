@@ -1,5 +1,5 @@
-from gestion_escolar.gestion import CentroEducativo
-from gestion_escolar.modelos import Alumno, Asignatura, Profesor
+from escuela.gestion import CentroEducativo
+from escuela.modelos import Alumno, Asignatura, Profesor
 
 
 class InterfazConsola:
@@ -91,7 +91,7 @@ class InterfazConsola:
                     print(f"Error: {e}")
 
             elif opcion == "9":
-                print("Guardando datos en JSON...")
+                print("Guardando datos en BD...")
                 self.sistema.guardar_datos()
                 print("¡Hasta pronto!")
                 break
