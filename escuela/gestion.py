@@ -1,10 +1,5 @@
 from escuela.db_manager import DBManager
-from escuela.modelos import Alumno, Profesor, Asignatura
-
-
-class CentroEducativo:
-    def __init__(self):
-        self.db = DBManager()
+from escuela.modelos import Alumno, Profesor
 
 
 """
@@ -103,46 +98,73 @@ class CentroEducativo:
 """
 
 
-def agregar_alumno(self, alumno):
+class CentroEducativo:
+    def __init__(self, db_manager):
+        self.db = db_manager
 
-    self.db.insertar_alumno(alumno.dni, alumno.nombre, alumno.email)
+    # 1
+    def obtener_usuarios(self):
+        usuarios = []
+        # Obtenemos los datos crudos de la DB
+        # Asumimos que listar devuelve (columnas, datos)
+        _, alumnos_raw = self.db.listar("alumnos")
+        _, profes_raw = self.db.listar("profesores")
 
+        for a in alumnos_raw:
+            usuarios.append(Alumno.from_dict(a))
+        for p in profes_raw:
+            usuarios.append(Profesor.from_dict(p))
+        return usuarios
 
-def buscar_alumno(self, dni):
+    # 2 3
+    def agregar_usuario(self, usuario):
+        if isinstance(usuario, Alumno):
+            self.db.insertar_alumno(usuario.dni, usuario.nombre, usuario.email)
+        elif isinstance(usuario, Profesor):
+            self.db.insertar_profesor(
+                usuario.dni, usuario.nombre, usuario.email, usuario.especialidad
+            )
 
-    fila = self.db.buscar_alumno(dni)
+    # 4
+    def buscar_por_dni(self, dni):
+        res = self.db.buscar_alumno(dni)
+        if res:
+            return Alumno.from_dict(res)
 
-    if not fila:
+        res = self.db.buscar_profesor(dni)
+        if res:
+            return Profesor.from_dict(res)
         return None
 
-    return Alumno.from_dict(fila)
+    # 5
+    def modificar_usuario(self, dni):
+        print(f"Función de modificación para DNI {dni} en desarrollo...")
 
+    # 6
+    def eliminar_usuario(self, dni):
+        self.db.eliminar("alumnos", dni)
+        self.db.eliminar("profesores", dni)
 
-def eliminar_alumno(self, dni):
+    def eliminar_asignatura_alumno(self, dni, nombre_asig):
+        sql = (
+            "DELETE FROM notas_alumno WHERE alumno_dni = %s AND asignatura_nombre = %s"
+        )
+        self.db.ejecutar_consulta(sql, (dni, nombre_asig))
+        print(f"Asignatura {nombre_asig} eliminada para el alumno {dni}")
 
-    self.db.eliminar("alumnos", dni)
+    # 7
+    def matricular_en_alumno(self, dni, asignatura):
 
+        self.db.insertar_nota_alumno(dni, asignatura.nombre, 0)
 
-def matricular_en_alumno(self, dni, asignatura):
+    # 8
+    def poner_nota(self, dni, nombre_asig, nota):
+        if not (0 <= nota <= 10):
+            raise ValueError("La nota debe estar entre 0 y 10")
 
-    self.db.insertar_nota_alumno(dni, asignatura.nombre, asignatura.nota)
+        self.db.insertar_nota_alumno(dni, nombre_asig, nota)
 
+    # --- OPCIÓN 9: Guardar y Salir ---
+    def guardar_datos(self):
 
-def agregar_profesor(self, profesor):
-
-    self.db.insertar_a(profesor.dni, profesor.nombre, profesor.email)
-
-
-def buscar_profesor(self, dni):
-
-    fila = self.db.buscar_alumno(dni)
-
-    if not fila:
-        return None
-
-    return Profesor.from_dict(fila)
-
-
-def eliminar_profesor(self, dni):
-
-    self.db.eliminar("profesores", dni)
+        print("Sincronizando cambios finales con la base de datos...")

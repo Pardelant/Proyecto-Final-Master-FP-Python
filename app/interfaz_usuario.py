@@ -1,10 +1,9 @@
-from escuela.gestion import CentroEducativo
+from escuela.gestion import gestion
 from escuela.modelos import Alumno, Asignatura, Profesor
 
-
 class InterfazConsola:
-    def __init__(self):
-        self.sistema = CentroEducativo()
+    def __init__(self, sistema):
+        self.sistema = sistema
 
     def mostrar_menu(self):
         print("\n" + "=" * 35)
@@ -26,8 +25,6 @@ class InterfazConsola:
             opcion = self.mostrar_menu()
             
             if opcion == "1":
-                # Aplicamos polimorfismo: el sistema devuelve una lista de Personas
-                # y cada una se imprime según su propio método __str__
                 usuarios = self.sistema.obtener_usuarios()
                 if not usuarios:
                     print("\nNo hay usuarios registrados.")
@@ -39,7 +36,6 @@ class InterfazConsola:
                 dni = input("DNI: ")
                 nombre = input("Nombre: ")
                 email = input("Email: ")
-                # La validación del DNI se delega al sistema o al modelo
                 nuevo_alu = Alumno(dni, nombre, email)
                 self.sistema.agregar_usuario(nuevo_alu)
                 print("Alumno registrado localmente.")
@@ -61,7 +57,6 @@ class InterfazConsola:
 
             elif opcion == "5":
                 dni = input("DNI del usuario a modificar: ")
-                # Lógica para pedir qué campo cambiar y actualizar el objeto
                 self.sistema.modificar_usuario(dni)
 
             elif opcion == "6":
@@ -98,12 +93,3 @@ class InterfazConsola:
             else:
                 print("Opción no válida.")
 
-    # Bucle principal del menú
-    # while not salir: ...
-    def pedir_datos_alumno(self) -> dict:
-        """Solicita por teclado los datos para crear un alumno"""
-        dni = input("DNI: ")
-        nombre = input("Nombre: ")
-        email = input("EMAIL: ")
-        print("ids de las asignaturas: BD CD LM PROG SI")
-        ids_asig = ["BD", "CD", "LM,", "PROG", "SI"]

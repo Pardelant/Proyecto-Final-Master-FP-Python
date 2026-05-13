@@ -1,4 +1,4 @@
-import mysql
+import mysql.connector
 import tabulate
 
 
@@ -13,7 +13,7 @@ class DBManager:
 
     def _conectar(self, c):
         self.conn = mysql.connector.connect(
-            hosts=c["host"],
+            host=c["host"],
             port=c["port"],
             user=c["user"],
             password=c["pass"],
@@ -100,15 +100,17 @@ class DBManager:
         print(self.cursor.rowcount, "filas insertadas")
 
     def insertar_asignatura(self, nombre):
-        self.cursor.excute("INSERT into asignaturas (nombre) VALUES (%s)", (nombre))
+        self.cursor.excute(
+            "INSERT into asignaturas (nombre) VALUES (%s)", (nombre)
+        )
 
         self.conn.commit()
 
-        print(self.cursor.rowcount, "filas insertadas")
+        print(self.cursor.rowcount, "filas insertadas") 
 
     def insertar_nota_alumno(self, alumno_dni, asignatura_nombre, nota):
         self.cursor.execute(
-            "INSERT into notas_alumno (alumno_dni, asignatura_nombre, nota) VALUES (%s,%s,%s)",
+            "INSERT into notas_alumno (alumno_dni, asignatura_nombre, nota) VALUES (%s,%s,%s)", 
             (alumno_dni, asignatura_nombre, nota),
         )
 

@@ -2,34 +2,36 @@
 
 ## Descripción
 
-Este proyecto es un sistema de gestión escolar desarrollado en Python que permite administrar usuarios (alumnos y profesores), asignaturas, matriculaciones y calificaciones. Incluye validaciones básicas para datos como DNI y nombres, y calcula promedios de notas.
+Este proyecto es un sistema de gestión escolar desarrollado en Python que permite administrar usuarios (alumnos y profesores), asignaturas, matriculaciones y calificaciones. Utiliza una base de datos MySQL para la persistencia de datos, con validaciones básicas para datos como DNI y nombres, y calcula promedios de notas.
 
 El sistema está estructurado en módulos para una mejor organización del código:
 - **modelos.py**: Define las clases principales (Persona, Alumno, Profesor, Asignatura).
-- **gestion.py**: Contiene la clase `centro_educativo` para gestionar usuarios.
+- **gestion.py**: Contiene la clase `CentroEducativo` para gestionar usuarios.
 - **common.py**: Incluye validaciones y excepciones personalizadas.
-- **ficheros.py**: Gestiona la persistencia de datos en archivos JSON.
+- **db_manager.py**: Gestiona la conexión y operaciones con la base de datos MySQL.
 - **registrar.py**: Contiene funcionalidades de registro y autenticación.
 - **interfaz_usuario.py**: Proporciona la interfaz de usuario para interactuar con el sistema.
-- **datos/**: Carpeta que almacena los archivos JSON con información de alumnos, profesores y asignaturas.
+- **scripts/**: Contiene el script SQL para inicializar la base de datos.
+- **test/**: Incluye pruebas unitarias para validar el funcionamiento.
 
 ## Instalación
 
-Este proyecto requiere Python 3.14.3 No hay dependencias externas adicionales.
+Este proyecto requiere Python 3.14.3 y Docker para la base de datos MySQL. Las dependencias externas están listadas en `requirements.txt`.
 
 1. Clona o descarga el repositorio.
-2. Asegúrate de tener Python instalado en tu sistema.
-3. Ejecuta el archivo principal `main.py` para ver una demostración del sistema.
+2. Asegúrate de tener Python y Docker instalados en tu sistema.
+3. Instala las dependencias: `pip install -r requirements.txt`.
+4. Levanta la base de datos con Docker: `docker-compose up -d`.
+5. Ejecuta el archivo principal `main.py` para interactuar con el sistema.
 
 ## Uso
 
-Para ejecutar el sistema, simplemente corre el archivo `main.py`:
+Para ejecutar el sistema:
 
-```bash
-python main.py
-```
+1. Asegúrate de que la base de datos esté corriendo: `docker-compose up -d`.
+2. Corre el programa: `python main.py`.
 
-El programa creará un centro educativo, agregará algunos usuarios de ejemplo (profesores y alumnos), matriculará alumnos en asignaturas, asignará calificaciones y mostrará estadísticas como el número total de usuarios y la nota media global.
+El programa se conectará a la base de datos MySQL, permitirá gestionar usuarios, asignaturas y calificaciones a través de una interfaz de consola, y mostrará estadísticas como el número total de usuarios y la nota media global.
 
 ### Funcionalidades principales
 
@@ -38,6 +40,7 @@ El programa creará un centro educativo, agregará algunos usuarios de ejemplo (
 - **Calificar asignaturas**: Asignar notas del 0 al 10.
 - **Calcular promedios**: Nota media por alumno y global del centro.
 - **Listar usuarios**: Mostrar todos los usuarios registrados.
+- **Gestión de BD**: Operaciones CRUD con MySQL.
 
 ## Estructura del proyecto
 
@@ -45,22 +48,25 @@ El programa creará un centro educativo, agregará algunos usuarios de ejemplo (
 .
 ├── main.py                          # Archivo principal con la lógica de ejecución
 ├── ReadMe                           # Este archivo
+├── requirements.txt                 # Dependencias de Python
+├── docker-compose.yaml              # Configuración de Docker para MySQL
 ├── app/
 │   ├── __init__.py                  # Inicialización del módulo app
 │   └── interfaz_usuario.py          # Interfaz de usuario del sistema
-├── datos/
-│   ├── alumno.json                  # Base de datos de alumnos
-│   ├── asignatura.json              # Base de datos de asignaturas
-│   └── profesor.json                # Base de datos de profesores
-└── gestion_escolar/
-    ├── __init__.py                  # Inicialización del módulo
-    ├── common.py                    # Validaciones y excepciones
-    ├── ficheros.py                  # Gestión de persistencia en archivos
-    ├── gestion.py                   # Gestión del centro educativo
-    ├── modelos.py                   # Definición de clases principales
-    └── registrar.py                 # Funcionalidades de registro
+├── escuela/
+│   ├── __init__.py                  # Inicialización del módulo escuela
+│   ├── common.py                    # Validaciones y excepciones
+│   ├── db_manager.py                # Gestión de la base de datos MySQL
+│   ├── ficheros.py                  # (Comentado) Gestión de persistencia en archivos
+│   ├── gestion.py                   # Gestión del centro educativo
+│   ├── modelos.py                   # Definición de clases principales
+│   └── registrar.py                 # Funcionalidades de registro
+├── scripts/
+│   └── init_db.sql                  # Script para inicializar la base de datos
+└── test/
+    ├── __init__.py                  # Inicialización del módulo test
+    └── test_escuela.py              # Pruebas unitarias
 ```
-
 
 ## Autor
 

@@ -136,11 +136,12 @@ def main():
         "port": 3307,
         "user": "pardelant",
         "pass": "abc123",
-        "db": "escuela-db",
+        "db": "escuela-bd",
     }
 
-    sistema = DBManager(conf)
-    sistema = CentroEducativo()
+    db = DBManager(conf)
+    sistema = CentroEducativo(db)
+
     app = InterfazConsola(sistema)
     app.ejecutar()
 
