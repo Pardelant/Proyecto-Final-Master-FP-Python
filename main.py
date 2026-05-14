@@ -1,8 +1,11 @@
+from app import create_app
+
+"""
 from app.interfaz_usuario import InterfazConsola
 from escuela.gestion import CentroEducativo
 from escuela.db_manager import DBManager
-
-"""S
+"""
+"""
 from gestion_escolar.common import DatoInvalido, Validator
 from gestion_escolar.gestion import centro_educativo
 from gestion_escolar.modelos import Alumno, Asignatura, Profesor
@@ -128,7 +131,7 @@ if __name__ == "__main__":
     main()
 """
 
-
+"""
 def main():
     conf = {
         "motor": "mysql",
@@ -148,3 +151,9 @@ def main():
 
 if __name__ == "__main__":
     main()
+"""
+
+app = create_app()
+
+if __name__ == "__main__":
+    app.run(debug=True)
