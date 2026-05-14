@@ -1,4 +1,3 @@
-from escuela.gestion import gestion
 from escuela.modelos import Alumno, Asignatura, Profesor
 
 class InterfazConsola:

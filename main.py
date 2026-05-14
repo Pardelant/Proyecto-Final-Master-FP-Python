@@ -2,7 +2,7 @@ from app.interfaz_usuario import InterfazConsola
 from escuela.gestion import CentroEducativo
 from escuela.db_manager import DBManager
 
-"""
+"""S
 from gestion_escolar.common import DatoInvalido, Validator
 from gestion_escolar.gestion import centro_educativo
 from gestion_escolar.modelos import Alumno, Asignatura, Profesor
