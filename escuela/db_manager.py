@@ -72,16 +72,26 @@ class DBManager:
         print(self.cursor.rowcount, "filas eliminadas")
 
     def buscar_alumno(self, dni):
-        self.cursor.execute("SELECT * FROM alumnos WHERE dni = %s", (dni,))
-        return self.cursor.fetchone()
+        # Creamos un cursor temporal que devuelva diccionarios
+        cursor_dict = self.conn.cursor(dictionary=True)
+        cursor_dict.execute("SELECT * FROM alumnos WHERE dni = %s", (dni,))
+        resultado = cursor_dict.fetchone()
+        cursor_dict.close()
+        return resultado
 
     def buscar_profesor(self, dni):
-        self.cursor.execute("SELECT * FROM profesores WHERE dni = %s", (dni,))
-        return self.cursor.fetchone()
+        cursor_dict = self.conn.cursor(dictionary=True)
+        cursor_dict.execute("SELECT * FROM profesores WHERE dni = %s", (dni,))
+        resultado = cursor_dict.fetchone()
+        cursor_dict.close()
+        return resultado
 
     def buscar_usuario(self, dni):
-        self.cursor.execute("SELECT * FROM usuarios WHERE dni = %s", (dni,))
-        return self.cursor.fetchone()
+        cursor_dict = self.conn.cursor(dictionary=True)
+        cursor_dict.execute("SELECT * FROM usuarios WHERE dni = %s", (dni,))
+        resultado = cursor_dict.fetchone()
+        cursor_dict.close()
+        return resultado
 
     def insertar_alumno(self, dni, nombre, email):
         self.cursor.execute(
