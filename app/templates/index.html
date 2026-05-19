@@ -1,13 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Flask Escuela</title>
+    <meta charset="UTF-8">
+    <title>{% block title %}Escuela{% endblock %}</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-<h1>Sistema Escolar</h1>
+    <nav class="navbar">
+        <h1>Gestión Escuela</h1>
 
-<p>Flask funcionando 🚀</p>
+        <ul>
+            <li><a href="/">Inicio</a></li>
+            <li><a href="/alumnos">Alumnos</a></li>
+            <li><a href="/profesores">Profesores</a></li>
+            <li><a href="/asignaturas">Asignaturas</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        {% block content %}
+        {% endblock %}
+    </main>
 
 </body>
 </html>
