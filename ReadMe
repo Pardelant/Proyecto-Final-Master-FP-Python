@@ -2,69 +2,106 @@
 
 ## Descripción
 
-Este proyecto es un sistema de gestión escolar desarrollado en Python que permite administrar usuarios (alumnos y profesores), asignaturas, matriculaciones y calificaciones. Utiliza una base de datos MySQL para la persistencia de datos, con validaciones básicas para datos como DNI y nombres, y calcula promedios de notas.
+Proyecto de gestión escolar desarrollado en Python que permite administrar alumnos, profesores, asignaturas, matriculaciones y calificaciones. La aplicación utiliza una base de datos MySQL en Docker y ofrece una interfaz web con Flask.
 
-El sistema está estructurado en módulos para una mejor organización del código:
-- **modelos.py**: Define las clases principales (Persona, Alumno, Profesor, Asignatura).
-- **gestion.py**: Contiene la clase `CentroEducativo` para gestionar usuarios.
-- **common.py**: Incluye validaciones y excepciones personalizadas.
-- **db_manager.py**: Gestiona la conexión y operaciones con la base de datos MySQL.
-- **registrar.py**: Contiene funcionalidades de registro y autenticación.
-- **interfaz_usuario.py**: Proporciona la interfaz de usuario para interactuar con el sistema.
-- **scripts/**: Contiene el script SQL para inicializar la base de datos.
-- **test/**: Incluye pruebas unitarias para validar el funcionamiento.
+El sistema se organiza en módulos para separar la lógica de negocio, la persistencia y la presentación:
+- **escuela/modelos.py**: Clases `Persona`, `Alumno`, `Profesor`, `Asignatura`.
+- **escuela/gestion.py**: Clase `CentroEducativo` para gestionar usuarios y operaciones.
+- **escuela/common.py**: Validaciones y excepciones personalizadas.
+- **escuela/db_manager.py**: Conexión y operaciones MySQL.
+- **escuela/registrar.py**: Registro y autenticación.
+- **app/__init__.py**: Crea la aplicación Flask.
+- **app/routes.py**: Define las rutas web y la inicialización del sistema.
+- **app/templates/index.html**: Plantilla principal de la interfaz web.
+- **scripts/init_db.sql**: Script para inicializar la base de datos.
+- **test/test_escuela.py**: Pruebas unitarias del sistema.
+
+## Requisitos
+
+- Python 3.8 o superior
+- Docker y Docker Compose
+- pip
+- Flask
+- MySQL Connector Python
+- tabulate
 
 ## Instalación
 
-Este proyecto requiere Python 3.14.3 y Docker para la base de datos MySQL. Las dependencias externas están listadas en `requirements.txt`.
-
-1. Clona o descarga el repositorio.
-2. Asegúrate de tener Python y Docker instalados en tu sistema.
-3. Instala las dependencias: `pip install -r requirements.txt`.
-4. Levanta la base de datos con Docker: `docker-compose up -d`.
-5. Ejecuta el archivo principal `main.py` para interactuar con el sistema.
+1. Clona el repositorio.
+2. Crea un entorno virtual (opcional pero recomendado):
+   ```bash
+   python -m venv .venv
+   .\.venv\Scripts\activate
+   ```
+3. Instala dependencias:
+   ```bash
+   pip install -r requirements.txt
+   pip install flask
+   ```
+4. Levanta la base de datos MySQL con Docker:
+   ```bash
+   docker-compose up -d
+   ```
+5. Ejecuta la aplicación:
+   ```bash
+   python main.py
+   ```
 
 ## Uso
 
-Para ejecutar el sistema:
+### Interfaz web
 
-1. Asegúrate de que la base de datos esté corriendo: `docker-compose up -d`.
-2. Corre el programa: `python main.py`.
+1. Arranca el servicio Docker: `docker-compose up -d`
+2. Ejecuta la aplicación: `python main.py`
+3. Abre el navegador en `http://localhost:5000`
 
-El programa se conectará a la base de datos MySQL, permitirá gestionar usuarios, asignaturas y calificaciones a través de una interfaz de consola, y mostrará estadísticas como el número total de usuarios y la nota media global.
+### Ejecución por consola
 
-### Funcionalidades principales
+El archivo `main.py` actualmente arranca la aplicación Flask. El código comentado en `main.py` muestra la lógica de ejemplo para una interfaz de consola y la conexión directa con `DBManager`.
 
-- **Crear usuarios**: Profesores y alumnos con validación de DNI.
-- **Matricular alumnos**: En asignaturas específicas.
-- **Calificar asignaturas**: Asignar notas del 0 al 10.
-- **Calcular promedios**: Nota media por alumno y global del centro.
-- **Listar usuarios**: Mostrar todos los usuarios registrados.
-- **Gestión de BD**: Operaciones CRUD con MySQL.
+### Pruebas unitarias
+
+Para ejecutar las pruebas:
+```bash
+python -m pytest test/test_escuela.py -v
+```
+
+## Configuración de la base de datos
+
+La base de datos MySQL se ejecuta mediante `docker-compose.yaml` con los siguientes valores:
+- Host: `localhost`
+- Puerto: `3307`
+- Usuario: `pardelant`
+- Contraseña: `abc123`
+- Base de datos: `escuela-bd`
+
+Si necesitas cambiar la configuración, modifica los valores en `app/routes.py` o en `escuela/db_manager.py` según corresponda.
 
 ## Estructura del proyecto
 
 ```
 .
-├── main.py                          # Archivo principal con la lógica de ejecución
-├── ReadMe                           # Este archivo
+├── main.py                          # Punto de entrada de la aplicación
+├── ReadMe                           # Documentación del proyecto
 ├── requirements.txt                 # Dependencias de Python
 ├── docker-compose.yaml              # Configuración de Docker para MySQL
 ├── app/
-│   ├── __init__.py                  # Inicialización del módulo app
-│   └── interfaz_usuario.py          # Interfaz de usuario del sistema
+│   ├── __init__.py                  # Inicialización de la app Flask
+│   ├── routes.py                    # Rutas y arranque del sistema
+│   ├── static/                      # Recursos estáticos (CSS)
+│   └── templates/                   # Plantillas HTML
 ├── escuela/
-│   ├── __init__.py                  # Inicialización del módulo escuela
+│   ├── __init__.py                  # Inicialización del paquete escuela
 │   ├── common.py                    # Validaciones y excepciones
-│   ├── db_manager.py                # Gestión de la base de datos MySQL
-│   ├── ficheros.py                  # (Comentado) Gestión de persistencia en archivos
+│   ├── db_manager.py                # Conexión MySQL y operaciones de DB
+│   ├── ficheros.py                  # Funciones de persistencia en archivos
 │   ├── gestion.py                   # Gestión del centro educativo
-│   ├── modelos.py                   # Definición de clases principales
-│   └── registrar.py                 # Funcionalidades de registro
+│   ├── modelos.py                   # Modelos de datos
+│   └── registrar.py                 # Registro y autenticación
 ├── scripts/
-│   └── init_db.sql                  # Script para inicializar la base de datos
+│   └── init_db.sql                  # Script de inicialización de la base de datos
 └── test/
-    ├── __init__.py                  # Inicialización del módulo test
+    ├── __init__.py                  # Inicialización del paquete de pruebas
     └── test_escuela.py              # Pruebas unitarias
 ```
 
@@ -74,4 +111,4 @@ Antonio Pardo del Riego
 
 ## Licencia
 
-Este proyecto es para fines educativos y no tiene una licencia específica asignada.
+Este proyecto se proporciona para fines educativos y no tiene licencia específica asignada.
