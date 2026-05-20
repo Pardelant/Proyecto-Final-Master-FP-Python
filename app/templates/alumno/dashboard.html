@@ -1,5 +1,29 @@
-<h1>Panel Alumno</h1>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Escuela{% endblock %}</title>
 
-<p>Bienvenido al sistema</p>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
 
-<a href="/logout">Cerrar sesión</a>
+    <nav class="navbar">
+        <h1>Gestión Escuela</h1>
+
+        <ul>
+            <li><a href="/">Inicio</a></li>
+            <li><a href="/alumnos">Alumnos</a></li>
+            <li><a href="/profesores">Profesores</a></li>
+            <li><a href="/asignaturas">Asignaturas</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+</body>
+</html>
