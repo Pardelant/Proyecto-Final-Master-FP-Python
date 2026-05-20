@@ -102,7 +102,6 @@ class CentroEducativo:
     def __init__(self, db_manager):
         self.db = db_manager
 
-    # 1
     def obtener_usuarios(self):
         usuarios = []
         # Obtenemos los datos crudos de la DB
@@ -125,22 +124,39 @@ class CentroEducativo:
                 usuario.dni, usuario.nombre, usuario.email, usuario.especialidad
             )
 
-    # 4
     def buscar_por_dni(self, dni):
+        # Alumno
         res = self.db.buscar_alumno(dni)
         if res:
+            notas = self.db.buscar_notas_por_alumno(dni)
+            res["notas_alumno"] = notas
             return Alumno.from_dict(res)
 
+        # Profesor
         res = self.db.buscar_profesor(dni)
         if res:
+            asigs = self.db.buscar_asignaturas_profesor(dni)
+            res["asignaturas_impartidas"] = asigs
             return Profesor.from_dict(res)
+
         return None
 
-    # 5
+    def obtener_alumnos_objeto(self):
+        cursor_dict = self.db.conn.cursor(dictionary=True)
+        cursor_dict.execute("SELECT * FROM alumnos")
+        filas = cursor_dict.fetchall()
+        cursor_dict.close()
+
+        alumnos = []
+        for f in filas:
+            notas = self.db.buscar_notas_por_alumno(f["dni"])
+            f["notas_alumno"] = notas
+            alumnos.append(Alumno.from_dict(f))
+        return alumnos
+
     def modificar_usuario(self, dni):
         print(f"Función de modificación para DNI {dni} en desarrollo...")
 
-    # 6
     def eliminar_usuario(self, dni):
         self.db.eliminar("alumnos", dni)
         self.db.eliminar("profesores", dni)
@@ -152,19 +168,16 @@ class CentroEducativo:
         self.db.ejecutar_consulta(sql, (dni, nombre_asig))
         print(f"Asignatura {nombre_asig} eliminada para el alumno {dni}")
 
-    # 7
     def matricular_en_alumno(self, dni, asignatura):
 
         self.db.insertar_nota_alumno(dni, asignatura.nombre, 0)
 
-    # 8
     def poner_nota(self, dni, nombre_asig, nota):
         if not (0 <= nota <= 10):
             raise ValueError("La nota debe estar entre 0 y 10")
 
         self.db.insertar_nota_alumno(dni, nombre_asig, nota)
 
-    # --- OPCIÓN 9: Guardar y Salir ---
     def guardar_datos(self):
 
         print("Sincronizando cambios finales con la base de datos...")

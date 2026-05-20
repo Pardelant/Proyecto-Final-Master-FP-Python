@@ -93,6 +93,34 @@ class DBManager:
         cursor_dict.close()
         return resultado
 
+    def obtener_todas_asignaturas(self):
+        cursor_dict = self.conn.cursor(dictionary=True)
+        cursor_dict.execute("SELECT * FROM asignaturas")
+        resultado = cursor_dict.fetchall()
+        cursor_dict.close()
+        return resultado
+
+    def buscar_notas_por_alumno(self, dni):
+        cursor_dict = self.conn.cursor(dictionary=True)
+        # Buscamos en notas_alumnos para construir la lista de asignaturas del alumno
+        cursor_dict.execute(
+            "SELECT asignatura_nombre AS asig_id, nota FROM notas_alumnos WHERE alumno_dni = %s",
+            (dni,),
+        )
+        resultado = cursor_dict.fetchall()
+        cursor_dict.close()
+        return resultado
+
+    def buscar_asignaturas_profesor(self, dni):
+        cursor_dict = self.conn.cursor(dictionary=True)
+        cursor_dict.execute(
+            "SELECT asignatura_nombre FROM asignaturas_profesores WHERE profesor_dni = %s",
+            (dni,),
+        )
+        resultado = [fila["asignatura_nombre"] for fila in cursor_dict.fetchall()]
+        cursor_dict.close()
+        return resultado
+
     def insertar_alumno(self, dni, nombre, email):
         self.cursor.execute(
             "INSERT INTO alumnos (dni, nombre, email) VALUES (%s, %s, %s)",
