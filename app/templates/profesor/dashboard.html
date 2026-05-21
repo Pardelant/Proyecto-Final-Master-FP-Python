@@ -1,29 +1,68 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Escuela{% endblock %}</title>
-
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
+    <title>Panel del Profesor</title>
 </head>
+
 <body>
+    <div class="card">
+        <h2>Panel del Profesor: {{ profesor.nombre }}</h2>
+        <p><strong>Especialidad:</strong> {{ profesor.especialidad }}</p>
+        <p><strong>Asignaturas que imparte:</strong>
+            {% for asig in profesor.asignaturas_impartidas %}
+            <span style="background: #e1e1e1; padding: 3px 8px; border-radius: 4px; margin-right: 5px;">{{ asig
+                }}</span>
+            {% endfor %}
+        </p>
+        <a href="/logout" style="color: #c0392b;">Cerrar Sesión</a>
+    </div>
 
-    <nav class="navbar">
-        <h1>Gestión Escuela</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for cat, msg in messages %}
+    <div style="color: {% if cat == 'danger' %}red{% else %}green{% endif %}; margin: 10px 0;">{{ msg }}</div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
 
-        <ul>
-            <li><a href="/">Inicio</a></li>
-            <li><a href="/alumnos">Alumnos</a></li>
-            <li><a href="/profesores">Profesores</a></li>
-            <li><a href="/asignaturas">Asignaturas</a></li>
-        </ul>
-    </nav>
-
-    <main class="container">
-        {% block content %}
-        {% endblock %}
-    </main>
-
+    <div class="card">
+        <h3>📋 Calificaciones Globales de Alumnos</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Alumno (DNI)</th>
+                    <th>Asignatura Matriculada</th>
+                    <th>Nota Actual</th>
+                    <th>Modificar Nota</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for alu in alumnos %}
+                {% if alu._asignaturas %}
+                {% for asig in alu._asignaturas %}
+                <tr>
+                    <td>{{ alu.nombre }} ({{ alu._dni }})</td>
+                    <td>{{ asig.nombre }}</td>
+                    <td>{{ asig.nota }}</td>
+                    <td>
+                        <form action="/profesor/calificar" method="POST" style="display: inline-block;">
+                            <input type="hidden" name="alumno_dni" value="{{ alu._dni }}">
+                            <input type="hidden" name="asignatura" value="{{ asig.nombre }}">
+                            <input type="number" name="nota" min="0" max="10" step="0.1" value="{{ asig.nota }}"
+                                required style="width: 60px; padding: 4px;">
+                            <button type="submit"
+                                style="background: #2980b9; color: white; border: none; padding: 4px 10px; cursor: pointer;">Guardar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </body>
+
 </html>

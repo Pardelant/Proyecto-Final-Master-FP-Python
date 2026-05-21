@@ -1,6 +1,4 @@
-from escuela.db_manager import DBManager
 from escuela.modelos import Alumno, Profesor
-
 
 """
     # PERSISTENCIA
@@ -153,9 +151,6 @@ class CentroEducativo:
             f["notas_alumno"] = notas
             alumnos.append(Alumno.from_dict(f))
         return alumnos
-
-    def modificar_usuario(self, dni):
-        print(f"Función de modificación para DNI {dni} en desarrollo...")
 
     def eliminar_usuario(self, dni):
         self.db.eliminar("alumnos", dni)
