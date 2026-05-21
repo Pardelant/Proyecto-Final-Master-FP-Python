@@ -1,13 +1,24 @@
 from flask import Flask
-from app.routes import init_sistema
 
-def create_app():
+
+def create_app(config: dict | None = None):
+    """Crea y configura la aplicación Flask.
+
+    Acepta un diccionario `config` opcional para configurar `app.config`.
+    """
 
     app = Flask(__name__)
 
-    from app.routes import main
+    if config:
+        app.config.update(config)
+
+    from app.routes import main, init_sistema
+
     app.register_blueprint(main)
 
     init_sistema()
 
     return app
+
+
+__all__ = ["create_app"]

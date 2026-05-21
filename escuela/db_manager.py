@@ -50,6 +50,12 @@ class DBManager:
 
         return tabulate.tabulate(datos, headers=columnas)
 
+    def listar_alumnos(self):
+        return self.ejecutar_consulta("SELECT * FROM alumnos")[1]
+
+    def listar_profesores(self):
+        return self.ejecutar_consulta("SELECT * FROM profesores")[1]
+
     def eliminar(self, tabla, identificador):
         tablas_validas = {
             "alumnos": "dni",
@@ -70,6 +76,17 @@ class DBManager:
 
         self.conn.commit()
         print(self.cursor.rowcount, "filas eliminadas")
+
+    def eliminar_asignatura_alumno(self, dni, nombre_asig):
+        self.cursor.execute(
+            """
+            DELETE FROM notas_alumnos
+            WHERE alumno_dni = %s AND asignatura_nombre = %s
+        """,
+            (dni, nombre_asig),
+        )
+
+        self.conn.commit()
 
     def buscar_alumno(self, dni):
         # Creamos un cursor temporal que devuelva diccionarios
@@ -102,7 +119,6 @@ class DBManager:
 
     def buscar_notas_por_alumno(self, dni):
         cursor_dict = self.conn.cursor(dictionary=True)
-        # Buscamos en notas_alumnos para construir la lista de asignaturas del alumno
         cursor_dict.execute(
             "SELECT asignatura_nombre AS asig_id, nota FROM notas_alumnos WHERE alumno_dni = %s",
             (dni,),
@@ -110,6 +126,18 @@ class DBManager:
         resultado = cursor_dict.fetchall()
         cursor_dict.close()
         return resultado
+
+    def buscar_asignaturas_alumno(self, dni):
+        cursor = self.conn.cursor(dictionary=True)
+        cursor.execute(
+            """
+            SELECT asignatura_nombre
+            FROM notas_alumnos
+            WHERE alumno_dni = %s
+        """,
+            (dni,),
+        )
+        return cursor.fetchall()
 
     def buscar_asignaturas_profesor(self, dni):
         cursor_dict = self.conn.cursor(dictionary=True)
@@ -126,6 +154,10 @@ class DBManager:
             "INSERT INTO alumnos (dni, nombre, email) VALUES (%s, %s, %s)",
             (dni, nombre, email),
         )
+        self.cursor.execute(
+            "INSERT INTO usuarios (dni, password, rol) VALUES (%s, %s, %s)",
+            (dni, "1234", "alumno"),
+        )
 
         self.conn.commit()
         print(self.cursor.rowcount, "filas insertadas")
@@ -136,6 +168,10 @@ class DBManager:
             (dni, nombre, email, especialidad),
         )
 
+        self.cursor.execute(
+            "INSERT INTO usuarios (dni, password, rol) VALUES (%s, %s, %s)",
+            (dni, "admin", "alumno"),
+        )
         self.conn.commit()
         print(self.cursor.rowcount, "filas insertadas")
 

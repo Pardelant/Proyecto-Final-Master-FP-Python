@@ -1,69 +1,71 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <title>Panel del Alumno</title>
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
+    <title>Alumno</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
+
     <div class="container">
-        <h1>Hola, {{ nombre }}</h1>
-        <p>Desde aquí puedes gestionar tus asignaturas y ver tus notas.</p>
 
-        {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-            {% for category, message in messages %}
-              <div style="padding:10px; margin-bottom:20px; border-radius:5px; background-color: #d4edda; color: #155724;">{{ message }}</div>
-            {% endfor %}
-          {% endif %}
-        {% endwith %}
+        <div class="card">
+            <h2>Hola, {{ alumno.nombre }}</h2>
+            <a class="btn-danger" href="/logout">Cerrar sesión</a>
+        </div>
 
-        <div class="form-group">
-            <h3>📝 Matricularse en nueva asignatura</h3>
+        <div class="card">
+            <h3>Matricular asignatura</h3>
+
             <form action="/alumno/matricular" method="POST">
-                <select name="asignatura" required>
-                    <option value="" disabled selected>Elige una asignatura...</option>
+                <select name="asignatura">
+
                     {% for asig in disponibles %}
-                        <option value="{{ asig[0] }}">{{ asig[0] }}</option>
+                    <option value="{{ asig['nombre'] }}">
+                        {{ asig['nombre'] }}
+                    </option>
                     {% endfor %}
+
                 </select>
-                <button type="submit" style="background:#2ecc71; color:white; border:none; cursor:pointer;">Matricularme</button>
+
+                <button class="btn-success" type="submit">Matricularme</button>
             </form>
         </div>
 
-        <h3>📊 Mis Calificaciones</h3>
-        {% if notas %}
-            <table>
-                <thead>
-                    <tr>
-                        <th>Asignatura</th>
-                        <th>Nota</th>
-                        <th>Estado</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for nota in notas %}
-                    <tr>
-                        <td>{{ nota[0] }}</td>
-                        <td><strong>{{ nota[1] }}</strong></td>
-                        <td>
-                            {% if nota[1] >= 5 %}
-                                <span class="badge aprobado">APROBADO</span>
-                            {% else %}
-                                <span class="badge suspenso">SUSPENSO / PENDIENTE</span>
-                            {% endif %}
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        {% else %}
-            <p>Aún no estás matriculado en ninguna asignatura.</p>
-        {% endif %}
+        <div class="card">
+            <h3>Mis notas</h3>
 
-        <br>
-        <a href="/logout" style="color:#e74c3c;">Cerrar sesión</a>
+            {% if notas %}
+            <table>
+                <tr>
+                    <th>Asignatura</th>
+                    <th>Nota</th>
+                    <th>Estado</th>
+                </tr>
+
+                {% for nota in notas %}
+                <tr>
+                    <td>{{ nota.asignatura_nombre }}</td>
+                    <td>{{ nota.nota }}</td>
+                    <td>
+                        {% if nota.nota >= 5 %}
+                        <span class="badge aprobado">APROBADO</span>
+                        {% else %}
+                        <span class="badge suspenso">SUSPENSO</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+            <p>No tienes asignaturas aún.</p>
+            {% endif %}
+        </div>
+
     </div>
+
 </body>
+
 </html>
