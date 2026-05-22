@@ -1,3 +1,6 @@
+from escuela.modelos import Alumno, Profesor
+
+
 class CentroEducativo:
     def __init__(self, db_manager):
         self.db = db_manager
@@ -20,28 +23,40 @@ class CentroEducativo:
             )
 
     def buscar_por_dni(self, dni):
+        # 1. Buscamos los datos básicos del alumno
+        res = self.db.buscar_alumno(dni)
+        if res:
+            # 2. Buscamos sus notas en la base de datos
+            notas = self.db.buscar_notas_por_alumno(dni)
+            # 3. Las inyectamos en el diccionario con la clave exacta que espera modelos.py
+            res["notas_alumno"] = notas
+            # 4. Ahora sí, creamos el objeto
+            return Alumno.from_dict(res)
 
-        alumno = self.db.buscar_alumno(dni)
-        if alumno:
-            alumno["notas_alumno"] = self.db.buscar_notas_por_alumno(dni)
-
-            alumno["asignaturas"] = [
-                a["asignatura_nombre"] for a in self.db.buscar_asignaturas_alumno(dni)
-            ]
-
-            alumno["rol"] = "alumno"
-            return alumno
-
-        profesor = self.db.buscar_profesor(dni)
-        if profesor:
-            profesor["asignaturas_impartidas"] = [
-                self.db.buscar_asignaturas_profesor(dni)
-            ]
-
-            profesor["rol"] = "profesor"
-            return profesor
+        # (Haz lo mismo para el profesor)
+        res_prof = self.db.buscar_profesor(dni)
+        if res_prof:
+            asigs = self.db.buscar_asignaturas_profesor(dni)
+            res_prof["asignaturas_impartidas"] = asigs
+            return Profesor.from_dict(res_prof)
 
         return None
+
+    def obtener_alumnos_objetos(self):
+        datos_crudos = self.db.listar_alumnos()
+
+        lista_objetos = []
+
+        if datos_crudos:
+            for fila in datos_crudos:
+                dni = fila[0]
+
+                alumno_obj = self.buscar_por_dni(dni)
+
+                if alumno_obj:
+                    lista_objetos.append(alumno_obj)
+
+        return lista_objetos
 
     def eliminar_usuario(self, dni):
         self.db.eliminar("alumnos", dni)

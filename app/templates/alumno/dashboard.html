@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Alumno</title>
+    <title>Dashboard Alumno</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
@@ -11,54 +11,54 @@
 
     <div class="container">
 
-        <div class="card">
+        <div class="card header-card">
             <h2>Hola, {{ alumno.nombre }}</h2>
-            <a class="btn-danger" href="/logout">Cerrar sesión</a>
+            <a class="btn btn-danger" href="/logout">Cerrar sesión</a>
         </div>
 
         <div class="card">
             <h3>Matricular asignatura</h3>
-
             <form action="/alumno/matricular" method="POST">
-                <select name="asignatura">
-
-                    {% for asig in disponibles %}
-                    <option value="{{ asig['nombre'] }}">
-                        {{ asig['nombre'] }}
-                    </option>
-                    {% endfor %}
-
-                </select>
-
-                <button class="btn-success" type="submit">Matricularme</button>
+                <div class="form-group">
+                    <select name="asignatura">
+                        {% for asig in disponibles %}
+                        <option value="{{ asig['nombre'] }}">{{ asig['nombre'] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button class="btn btn-success" type="submit">Matricularme</button>
             </form>
         </div>
 
         <div class="card">
             <h3>Mis notas</h3>
-
-            {% if notas %}
-            <table>
-                <tr>
-                    <th>Asignatura</th>
-                    <th>Nota</th>
-                    <th>Estado</th>
-                </tr>
-
-                {% for nota in notas %}
-                <tr>
-                    <td>{{ nota.asignatura_nombre }}</td>
-                    <td>{{ nota.nota }}</td>
-                    <td>
-                        {% if nota.nota >= 5 %}
-                        <span class="badge aprobado">APROBADO</span>
-                        {% else %}
-                        <span class="badge suspenso">SUSPENSO</span>
-                        {% endif %}
-                    </td>
-                </tr>
-                {% endfor %}
-            </table>
+            {% if alumno._asignaturas %}
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Asignatura</th>
+                            <th>Nota</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for asig in alumno._asignaturas %}
+                        <tr>
+                            <td>{{ asig.nombre }}</td>
+                            <td>{{ asig.nota }}</td>
+                            <td>
+                                {% if asig.nota >= 5 %}
+                                <span class="badge aprobado">APROBADO</span>
+                                {% else %}
+                                <span class="badge suspenso">SUSPENSO</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
             {% else %}
             <p>No tienes asignaturas aún.</p>
             {% endif %}

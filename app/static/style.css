@@ -1,153 +1,227 @@
-/* ===== RESET ===== */
+/* ===== CONFIGURACIÓN Y VARIABLES ===== */
+:root {
+    --bg-main: #0f172a;          /* Fondo de la app (Azul pizarra muy oscuro) */
+    --bg-card: #1e293b;          /* Fondo de las tarjetas */
+    --bg-input: #334155;         /* Fondo de inputs y selectores */
+    --text-main: #f8fafc;        /* Texto principal (Blanco suave) */
+    --text-muted: #94a3b8;       /* Texto secundario (Gris) */
+    --border: #475569;           /* Color de bordes */
+    --primary: #3b82f6;          /* Azul (Botones principales / Login) */
+    --primary-hover: #1d4ed8;
+    --success: #10b981;          /* Verde (Matricular / Guardar) */
+    --success-hover: #047857;
+    --danger: #ef4444;           /* Rojo (Cerrar sesión) */
+    --danger-hover: #b91c1c;
+}
+
+/* ===== RESET GENERAL ===== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', system-ui, sans-serif;
 }
 
-/* ===== BODY ===== */
 body {
-    background: #f5f7fb;
-    color: #2c3e50;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    line-height: 1.5;
+    padding: 20px;
 }
 
-/* ===== CONTENEDOR ===== */
+/* ===== ESTRUCTURA CENTRAL (LOGIN) ===== */
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-card h2 {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+}
+
+.login-card p {
+    margin-bottom: 25px;
+}
+
+/* ===== CONTENEDOR DASHBOARDS ===== */
 .container {
-    width: 90%;
     max-width: 1100px;
-    margin: 40px auto;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
-/* ===== CARD ===== */
+/* Tarjeta del encabezado (Hola, usuario / Cerrar sesión) */
+.header-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+/* ===== TARJETAS (CARDS) ===== */
 .card {
-    background: white;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
     padding: 25px;
-    border-radius: 14px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-    margin-bottom: 20px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
 }
 
-/* ===== TITULOS ===== */
-h1, h2, h3 {
+h2, h3 {
+    color: var(--text-main);
     margin-bottom: 15px;
 }
 
-/* ===== FORM ===== */
+p b {
+    color: var(--text-main);
+}
+
+p, .text-muted {
+    color: var(--text-muted);
+}
+
+/* ===== FORMULARIOS Y COMPONENTES ===== */
 form {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+}
+
+label {
+    color: var(--text-main);
+    font-size: 0.9rem;
+    font-weight: 500;
 }
 
 input, select {
-    padding: 10px;
-    border: 1px solid #dcdfe6;
-    border-radius: 8px;
-    font-size: 14px;
+    background-color: var(--bg-input);
+    color: var(--text-main);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 0.95rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
 }
 
 input:focus, select:focus {
     outline: none;
-    border-color: #3498db;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
 }
 
-/* ===== BOTONES ===== */
-button {
-    padding: 10px 14px;
+/* ===== BOTONES GENERALES ===== */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
     border: none;
-    border-radius: 8px;
+    border-radius: 6px;
     cursor: pointer;
-    background: #3498db;
-    color: white;
-    font-weight: bold;
-    transition: 0.2s;
+    transition: background-color 0.2s;
 }
 
-button:hover {
-    background: #2980b9;
-}
+.btn-primary { background-color: var(--primary); color: #fff; }
+.btn-primary:hover { background-color: var(--primary-hover); }
 
-/* ===== BOTÓN VERDE ===== */
-.btn-success {
-    background: #2ecc71;
-}
+.btn-success { background-color: var(--success); color: #fff; }
+.btn-success:hover { background-color: var(--success-hover); }
 
-.btn-success:hover {
-    background: #27ae60;
-}
-
-/* ===== BOTÓN ROJO ===== */
-.btn-danger {
-    background: #e74c3c;
-}
-
-.btn-danger:hover {
-    background: #c0392b;
-}
+.btn-danger { background-color: var(--danger); color: #fff; }
+.btn-danger:hover { background-color: var(--danger-hover); }
 
 /* ===== TABLAS ===== */
+.table-responsive {
+    overflow-x: auto;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 15px;
-    background: white;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-th {
-    background: #3498db;
-    color: white;
-    padding: 12px;
+    margin-top: 10px;
     text-align: left;
 }
 
-td {
-    padding: 12px;
-    border-bottom: 1px solid #eee;
+th {
+    background-color: var(--bg-input);
+    color: var(--text-main);
+    padding: 14px 16px;
+    font-weight: 600;
+    border-bottom: 2px solid var(--border);
 }
 
-/* ===== BADGES ===== */
+td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+}
+
+/* Formulario inline para las notas del profesor */
+table form {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+table input[type="number"] {
+    width: 80px;
+    padding: 6px 8px;
+}
+
+/* ===== ETIQUETAS (BADGES) ===== */
 .badge {
+    display: inline-block;
     padding: 4px 8px;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: bold;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    background-color: var(--bg-input);
+    color: var(--text-main);
 }
 
 .aprobado {
-    background: #d4edda;
-    color: #155724;
+    background-color: rgba(16, 185, 129, 0.2);
+    color: #34d399;
 }
 
 .suspenso {
-    background: #f8d7da;
-    color: #721c24;
+    background-color: rgba(239, 68, 68, 0.2);
+    color: #f87171;
 }
 
-/* ===== ALERTAS ===== */
+/* ===== COMPONENTE ALERTAS ===== */
 .alert {
-    padding: 10px;
-    border-radius: 8px;
-    margin-bottom: 15px;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 1px solid transparent;
 }
-
-.alert-success {
-    background: #d4edda;
-    color: #155724;
-}
-
 .alert-danger {
-    background: #f8d7da;
-    color: #721c24;
-}
-
-/* ===== LINKS ===== */
-a {
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
+    background-color: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border-color: rgba(239, 68, 68, 0.3);
 }
