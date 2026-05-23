@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Gestión Escuela</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="login-page">
+        <div class="card login-card">
+
+            <div>
+                <h2>Gestión Escuela</h2>
+                <p class="text-muted">Inicia sesión para continuar</p>
+            </div>
+
+            <form method="POST" action="/login">
+                <div class="form-group">
+                    <label>DNI</label>
+                    <input type="text" name="dni" placeholder="Introduce tu DNI" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Contraseña</label>
+                    <input type="password" name="password" placeholder="Introduce tu contraseña" required>
+                </div>
+
+                {% if error %}
+                <div class="alert alert-danger">
+                    {{ error }}
+                </div>
+                {% endif %}
+
+                <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+            </form>
+
+        </div>
+    </div>
+
+</body>
+</html>

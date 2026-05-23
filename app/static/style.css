@@ -1,0 +1,227 @@
+/* ===== CONFIGURACIÓN Y VARIABLES ===== */
+:root {
+    --bg-main: #0f172a;          /* Fondo de la app (Azul pizarra muy oscuro) */
+    --bg-card: #1e293b;          /* Fondo de las tarjetas */
+    --bg-input: #334155;         /* Fondo de inputs y selectores */
+    --text-main: #f8fafc;        /* Texto principal (Blanco suave) */
+    --text-muted: #94a3b8;       /* Texto secundario (Gris) */
+    --border: #475569;           /* Color de bordes */
+    --primary: #3b82f6;          /* Azul (Botones principales / Login) */
+    --primary-hover: #1d4ed8;
+    --success: #10b981;          /* Verde (Matricular / Guardar) */
+    --success-hover: #047857;
+    --danger: #ef4444;           /* Rojo (Cerrar sesión) */
+    --danger-hover: #b91c1c;
+}
+
+/* ===== RESET GENERAL ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    line-height: 1.5;
+    padding: 20px;
+}
+
+/* ===== ESTRUCTURA CENTRAL (LOGIN) ===== */
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-card h2 {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+}
+
+.login-card p {
+    margin-bottom: 25px;
+}
+
+/* ===== CONTENEDOR DASHBOARDS ===== */
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Tarjeta del encabezado (Hola, usuario / Cerrar sesión) */
+.header-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+/* ===== TARJETAS (CARDS) ===== */
+.card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+}
+
+h2, h3 {
+    color: var(--text-main);
+    margin-bottom: 15px;
+}
+
+p b {
+    color: var(--text-main);
+}
+
+p, .text-muted {
+    color: var(--text-muted);
+}
+
+/* ===== FORMULARIOS Y COMPONENTES ===== */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+}
+
+label {
+    color: var(--text-main);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+input, select {
+    background-color: var(--bg-input);
+    color: var(--text-main);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 0.95rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+/* ===== BOTONES GENERALES ===== */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-primary { background-color: var(--primary); color: #fff; }
+.btn-primary:hover { background-color: var(--primary-hover); }
+
+.btn-success { background-color: var(--success); color: #fff; }
+.btn-success:hover { background-color: var(--success-hover); }
+
+.btn-danger { background-color: var(--danger); color: #fff; }
+.btn-danger:hover { background-color: var(--danger-hover); }
+
+/* ===== TABLAS ===== */
+.table-responsive {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: var(--bg-input);
+    color: var(--text-main);
+    padding: 14px 16px;
+    font-weight: 600;
+    border-bottom: 2px solid var(--border);
+}
+
+td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+}
+
+/* Formulario inline para las notas del profesor */
+table form {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+table input[type="number"] {
+    width: 80px;
+    padding: 6px 8px;
+}
+
+/* ===== ETIQUETAS (BADGES) ===== */
+.badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    background-color: var(--bg-input);
+    color: var(--text-main);
+}
+
+.aprobado {
+    background-color: rgba(16, 185, 129, 0.2);
+    color: #34d399;
+}
+
+.suspenso {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+}
+
+/* ===== COMPONENTE ALERTAS ===== */
+.alert {
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 1px solid transparent;
+}
+.alert-danger {
+    background-color: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border-color: rgba(239, 68, 68, 0.3);
+}

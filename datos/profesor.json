@@ -1,0 +1,31 @@
+[
+    {
+        "dni": "11223344P",
+        "nombre": "Carlos Murillo",
+        "email": "c.murillo@edu.es",
+        "especialidad": "Programación y Software",
+        "asignaturas_impartidas": [
+            "PROG",
+            "CD"
+        ]
+    },
+    {
+        "dni": "55667788Q",
+        "nombre": "Ana Belén Souto",
+        "email": "ana.souto@edu.es",
+        "especialidad": "Sistemas y Redes",
+        "asignaturas_impartidas": [
+            "SI",
+            "LM"
+        ]
+    },
+    {
+        "dni": "99001122R",
+        "nombre": "Ricardo Pazos",
+        "email": "r.pazos@edu.es",
+        "especialidad": "Gestión de Datos",
+        "asignaturas_impartidas": [
+            "BD"
+        ]
+    }
+]

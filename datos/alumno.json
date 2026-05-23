@@ -1,0 +1,90 @@
+[
+    {
+        "dni": "12345678A",
+        "nombre": "Marcos López",
+        "email": "marcos.lopez@edu.es",
+        "notas_alumno": [
+            {
+                "asig_id": "BD",
+                "nota": 8.5
+            },
+            {
+                "asig_id": "PROG",
+                "nota": 9.0
+            },
+            {
+                "asig_id": "SI",
+                "nota": 7.5
+            },
+            {
+                "asig_id": "LM",
+                "nota": 8.0
+            },
+            {
+                "asig_id": "CD",
+                "nota": 6.5
+            }
+        ]
+    },
+    {
+        "dni": "23456789B",
+        "nombre": "Sara Méndez",
+        "email": "sara.mendez@edu.es",
+        "notas_alumno": [
+            {
+                "asig_id": "PROG",
+                "nota": 10.0
+            },
+            {
+                "asig_id": "CD",
+                "nota": 9.5
+            },
+            {
+                "asig_id": "LM",
+                "nota": 9.0
+            }
+        ]
+    },
+    {
+        "dni": "34567890C",
+        "nombre": "Braïs García",
+        "email": "brais.garcia@edu.es",
+        "notas_alumno": [
+            {
+                "asig_id": "SI",
+                "nota": 5.0
+            },
+            {
+                "asig_id": "BD",
+                "nota": 6.2
+            },
+            {
+                "asig_id": "PROG",
+                "nota": 4.5
+            }
+        ]
+    },
+    {
+        "dni": "45678901D",
+        "nombre": "Uxía Rodríguez",
+        "email": "uxia.rod@edu.es",
+        "notas_alumno": [
+            {
+                "asig_id": "BD",
+                "nota": 7.8
+            },
+            {
+                "asig_id": "LM",
+                "nota": 8.5
+            },
+            {
+                "asig_id": "SI",
+                "nota": 9.2
+            },
+            {
+                "asig_id": "CD",
+                "nota": 8.0
+            }
+        ]
+    }
+]

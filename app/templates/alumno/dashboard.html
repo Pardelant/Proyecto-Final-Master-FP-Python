@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Alumno</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="card header-card">
+            <h2>Hola, {{ alumno.nombre }}</h2>
+            <a class="btn btn-danger" href="/logout">Cerrar sesión</a>
+        </div>
+
+        <div class="card">
+            <h3>Matricular asignatura</h3>
+            <form action="/alumno/matricular" method="POST">
+                <div class="form-group">
+                    <select name="asignatura">
+                        {% for asig in disponibles %}
+                        <option value="{{ asig['nombre'] }}">{{ asig['nombre'] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button class="btn btn-success" type="submit">Matricularme</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h3>Mis notas</h3>
+            {% if alumno._asignaturas %}
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Asignatura</th>
+                            <th>Nota</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for asig in alumno._asignaturas %}
+                        <tr>
+                            <td>{{ asig.nombre }}</td>
+                            <td>{{ asig.nota }}</td>
+                            <td>
+                                {% if asig.nota >= 5 %}
+                                <span class="badge aprobado">APROBADO</span>
+                                {% else %}
+                                <span class="badge suspenso">SUSPENSO</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p>No tienes asignaturas aún.</p>
+            {% endif %}
+        </div>
+
+    </div>
+
+</body>
+
+</html>

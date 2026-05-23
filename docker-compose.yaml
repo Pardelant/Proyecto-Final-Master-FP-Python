@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  base_de_datos:
+    container_name: mysqldb-ejemplo
+    image: mysql:8.0
+    restart: always
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "abc123"
+      MYSQL_DATABASE: "escuela-bd"
+      MYSQL_USER: "pardelant"
+      MYSQL_PASSWORD: "abc123"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./scripts/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
+    networks:
+      - red-ejemplo
+
+# Estas secciones son obligatorias si las declaras arriba
+volumes:
+  db_data:
+
+networks:
+  red-ejemplo:

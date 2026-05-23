@@ -1,0 +1,133 @@
+# Sistema de Gestión Escolar
+
+## Descripción
+
+Proyecto de gestión escolar desarrollado en Python que ofrece una interfaz web para:
+- iniciar sesión como `alumno` o `profesor`
+- matricular alumnos en asignaturas disponibles
+- consultar notas y asignaturas de alumnos
+- calificar alumnos desde el rol de profesor
+
+El sistema usa Flask para la capa web y MySQL como base de datos. La configuración de la conexión está definida en `app/routes.py` y se ejecuta mediante Docker Compose.
+
+## Características principales
+
+- Login de usuarios por DNI y contraseña
+- Dashboard de alumno con matriculación en asignaturas
+- Dashboard de profesor con listado de alumnos y calificación de notas
+- Persistencia en base de datos MySQL
+- Módulos separados para lógica de negocio, acceso a datos y presentación
+
+## Requisitos
+
+- Python 3.8 o superior
+- Docker y Docker Compose
+- pip
+- `Flask`
+- `mysql-connector-python`
+- `tabulate`
+
+## Instalación
+
+1. Clona el repositorio.
+2. Crea y activa un entorno virtual (recomendado):
+   ```bash
+   python -m venv .venv
+   .\.venv\Scripts\activate
+   ```
+3. Instala las dependencias:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Inicia la base de datos MySQL con Docker:
+   ```bash
+   docker-compose up -d
+   ```
+5. Ejecuta la aplicación:
+   ```bash
+   python main.py
+   ```
+
+## Uso
+
+1. Abre el navegador en `http://localhost:5000`
+2. Inicia sesión en `/login`
+3. Según el rol, accederás a:
+   - `/alumno`: panel de alumno para ver asignaturas y matricularse
+   - `/profesor`: panel de profesor para ver alumnos y poner notas
+
+## Rutas principales
+
+- `/` → redirige a `/login`
+- `/login` → formulario de inicio de sesión
+- `/alumno` → panel de alumno
+- `/alumno/matricular` → matrícula en asignatura
+- `/profesor` → panel de profesor
+- `/profesor/calificar` → asignación de notas
+- `/logout` → cierra sesión
+
+## Configuración de la base de datos
+
+La aplicación usa `docker-compose.yaml` con estos valores:
+
+- Host: `localhost`
+- Puerto: `3307`
+- Usuario: `pardelant`
+- Contraseña: `abc123`
+- Base de datos: `escuela-bd`
+
+La configuración del acceso a MySQL se encuentra en `app/routes.py` dentro de `init_sistema()`.
+
+## Estructura del proyecto
+
+```
+.
+├── main.py
+├── ReadMe
+├── requirements.txt
+├── docker-compose.yaml
+├── app/
+│   ├── __init__.py
+│   ├── routes.py
+│   ├── static/
+│   │   └── style.css
+│   └── templates/
+│       ├── index.html
+│       ├── login.html
+│       ├── alumno/
+│       │   └── dashboard.html
+│       └── profesor/
+│           └── dashboard.html
+├── escuela/
+│   ├── __init__.py
+│   ├── centro_educativo.py
+│   ├── common.py
+│   ├── db_manager.py
+│   ├── ficheros.py
+│   ├── modelos.py
+│   └── registrar.py
+├── datos/
+│   ├── alumno.json
+│   ├── asignatura.json
+│   └── profesor.json
+├── scripts/
+│   └── init_db.sql
+└── test/
+    ├── __init__.py
+    └── test_escuela.py
+```
+
+## Pruebas
+
+Para ejecutar las pruebas unitarias:
+```bash
+python -m pytest test/test_escuela.py -v
+```
+
+## Autor
+
+Antonio Pardo del Riego
+
+## Licencia
+
+Este proyecto se proporciona para fines educativos y no tiene licencia específica asignada.
