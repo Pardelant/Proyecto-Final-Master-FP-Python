@@ -2,43 +2,44 @@
 
 ## Descripción
 
-Proyecto de gestión escolar desarrollado en Python que permite administrar alumnos, profesores, asignaturas, matriculaciones y calificaciones. La aplicación utiliza una base de datos MySQL en Docker y ofrece una interfaz web con Flask.
+Proyecto de gestión escolar desarrollado en Python que ofrece una interfaz web para:
+- iniciar sesión como `alumno` o `profesor`
+- matricular alumnos en asignaturas disponibles
+- consultar notas y asignaturas de alumnos
+- calificar alumnos desde el rol de profesor
 
-El sistema se organiza en módulos para separar la lógica de negocio, la persistencia y la presentación:
-- **escuela/modelos.py**: Clases `Persona`, `Alumno`, `Profesor`, `Asignatura`.
-- **escuela/gestion.py**: Clase `CentroEducativo` para gestionar usuarios y operaciones.
-- **escuela/common.py**: Validaciones y excepciones personalizadas.
-- **escuela/db_manager.py**: Conexión y operaciones MySQL.
-- **escuela/registrar.py**: Registro y autenticación.
-- **app/__init__.py**: Crea la aplicación Flask.
-- **app/routes.py**: Define las rutas web y la inicialización del sistema.
-- **app/templates/index.html**: Plantilla principal de la interfaz web.
-- **scripts/init_db.sql**: Script para inicializar la base de datos.
-- **test/test_escuela.py**: Pruebas unitarias del sistema.
+El sistema usa Flask para la capa web y MySQL como base de datos. La configuración de la conexión está definida en `app/routes.py` y se ejecuta mediante Docker Compose.
+
+## Características principales
+
+- Login de usuarios por DNI y contraseña
+- Dashboard de alumno con matriculación en asignaturas
+- Dashboard de profesor con listado de alumnos y calificación de notas
+- Persistencia en base de datos MySQL
+- Módulos separados para lógica de negocio, acceso a datos y presentación
 
 ## Requisitos
 
 - Python 3.8 o superior
 - Docker y Docker Compose
 - pip
-- Flask
-- MySQL Connector Python
-- tabulate
+- `Flask`
+- `mysql-connector-python`
+- `tabulate`
 
 ## Instalación
 
 1. Clona el repositorio.
-2. Crea un entorno virtual (opcional pero recomendado):
+2. Crea y activa un entorno virtual (recomendado):
    ```bash
    python -m venv .venv
    .\.venv\Scripts\activate
    ```
-3. Instala dependencias:
+3. Instala las dependencias:
    ```bash
    pip install -r requirements.txt
-   pip install flask
    ```
-4. Levanta la base de datos MySQL con Docker:
+4. Inicia la base de datos MySQL con Docker:
    ```bash
    docker-compose up -d
    ```
@@ -49,60 +50,78 @@ El sistema se organiza en módulos para separar la lógica de negocio, la persis
 
 ## Uso
 
-### Interfaz web
+1. Abre el navegador en `http://localhost:5000`
+2. Inicia sesión en `/login`
+3. Según el rol, accederás a:
+   - `/alumno`: panel de alumno para ver asignaturas y matricularse
+   - `/profesor`: panel de profesor para ver alumnos y poner notas
 
-1. Arranca el servicio Docker: `docker-compose up -d`
-2. Ejecuta la aplicación: `python main.py`
-3. Abre el navegador en `http://localhost:5000`
+## Rutas principales
 
-### Ejecución por consola
-
-El archivo `main.py` actualmente arranca la aplicación Flask. El código comentado en `main.py` muestra la lógica de ejemplo para una interfaz de consola y la conexión directa con `DBManager`.
-
-### Pruebas unitarias
-
-Para ejecutar las pruebas:
-```bash
-python -m pytest test/test_escuela.py -v
-```
+- `/` → redirige a `/login`
+- `/login` → formulario de inicio de sesión
+- `/alumno` → panel de alumno
+- `/alumno/matricular` → matrícula en asignatura
+- `/profesor` → panel de profesor
+- `/profesor/calificar` → asignación de notas
+- `/logout` → cierra sesión
 
 ## Configuración de la base de datos
 
-La base de datos MySQL se ejecuta mediante `docker-compose.yaml` con los siguientes valores:
+La aplicación usa `docker-compose.yaml` con estos valores:
+
 - Host: `localhost`
 - Puerto: `3307`
 - Usuario: `pardelant`
 - Contraseña: `abc123`
 - Base de datos: `escuela-bd`
 
-Si necesitas cambiar la configuración, modifica los valores en `app/routes.py` o en `escuela/db_manager.py` según corresponda.
+La configuración del acceso a MySQL se encuentra en `app/routes.py` dentro de `init_sistema()`.
 
 ## Estructura del proyecto
 
 ```
 .
-├── main.py                          # Punto de entrada de la aplicación
-├── ReadMe                           # Documentación del proyecto
-├── requirements.txt                 # Dependencias de Python
-├── docker-compose.yaml              # Configuración de Docker para MySQL
+├── main.py
+├── ReadMe
+├── requirements.txt
+├── docker-compose.yaml
 ├── app/
-│   ├── __init__.py                  # Inicialización de la app Flask
-│   ├── routes.py                    # Rutas y arranque del sistema
-│   ├── static/                      # Recursos estáticos (CSS)
-│   └── templates/                   # Plantillas HTML
+│   ├── __init__.py
+│   ├── routes.py
+│   ├── static/
+│   │   └── style.css
+│   └── templates/
+│       ├── index.html
+│       ├── login.html
+│       ├── alumno/
+│       │   └── dashboard.html
+│       └── profesor/
+│           └── dashboard.html
 ├── escuela/
-│   ├── __init__.py                  # Inicialización del paquete escuela
-│   ├── common.py                    # Validaciones y excepciones
-│   ├── db_manager.py                # Conexión MySQL y operaciones de DB
-│   ├── ficheros.py                  # Funciones de persistencia en archivos
-│   ├── gestion.py                   # Gestión del centro educativo
-│   ├── modelos.py                   # Modelos de datos
-│   └── registrar.py                 # Registro y autenticación
+│   ├── __init__.py
+│   ├── centro_educativo.py
+│   ├── common.py
+│   ├── db_manager.py
+│   ├── ficheros.py
+│   ├── modelos.py
+│   └── registrar.py
+├── datos/
+│   ├── alumno.json
+│   ├── asignatura.json
+│   └── profesor.json
 ├── scripts/
-│   └── init_db.sql                  # Script de inicialización de la base de datos
+│   └── init_db.sql
 └── test/
-    ├── __init__.py                  # Inicialización del paquete de pruebas
-    └── test_escuela.py              # Pruebas unitarias
+    ├── __init__.py
+    └── test_escuela.py
+```
+
+## Pruebas
+
+Para ejecutar las pruebas unitarias:
+```bash
+python -m pytest test/test_escuela.py -v
 ```
 
 ## Autor
